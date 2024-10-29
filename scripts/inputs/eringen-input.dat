@@ -1,0 +1,76 @@
+Project directory = None
+
+Output directory = /home/zach/Documents/School/Boulder/Graduate/Regueiro/Dissertation/figs/Eringen/mixed-Q1Q8-v2/
+
+Name = mixed-Q1Q8.pdf
+
+Animations = DELETE : False ; Framerate : 24
+
+Scaling = TIME : 1 ; DISPLACEMENT : 1e3 ; STRESS/STRAIN : 1
+
+Plot x-ticks = ENABLED : False ; POSITIONS : 0.08,0.085,0.09,0.095,0.10 ; LABELS : 0.08,0.085,0.09,0.095,0.10 ; SECONDARY : False
+
+Plot y-ticks = ENABLED : False ; POSITIONS : 0.8,0.9,1.0,1.1,1.2 ; LABELS : 0.8,0.9,1.0,1.1,1.2 ; SECONDARY : False
+
+Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 0.106 ; Y : 0.888 ; POSITION : center
+
+Plot grid = ENABLED : True ; WHICH : both
+
+Plot limits = XLIM_0 : 0.0 ; XLIM_1 : 0.4 ; YLIM_0 : None ; YLIM_1 : None
+
+Plot title = ENABLED : False ; LOCATION : 1.0 ; TITLE : Comparison of integration scheme for Q3H elements (no shock viscosity)
+
+Plot DPI = 600
+
+Plot font sizes = TITLE : 18 ; X-AXIS : 14 ; Y-AXIS : 14 ; LEGEND : 10 
+
+Simulation A directory = /output/neo-Hookean/Eringen/analytical/N25/Q1/1/
+
+Simulation B directory = /output/neo-Hookean/Eringen/Q1/1/Imp-T/
+
+Simulation C directory = /output/neo-Hookean/Eringen/Q1/1/CD-C/
+
+Simulation D directory = /output/neo-Hookean/Eringen/Q1/1/RKFNC-L/
+
+Simulation E directory = None
+
+Simulation A Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation B Skip = 5 ; 1 ; 1 ; 1 ; 1
+
+Simulation C Skip = 5 ; 1 ; 1 ; 1 ; 1
+
+Simulation D Skip = 5 ; 1 ; 1 ; 1 ; 1
+
+Simulation E Skip = 5 ; 1 ; 1 ; 1 ; 1
+
+Simulation A title = \hspace{0.4em}Analytical
+
+Simulation B title = \hspace{0.25em}$\OneField$, NB ($\beta\eq 0.25, \gamma\eq 0.5$)
+
+Simulation C title = $\OneField$, CD (C. mass)
+
+Simulation D title = $\OneField$, RKFNC (L. mass)
+
+Simulation E title = $\OneField$, LS-DYNA
+
+Simulation A probes = Height 1 (m) : 20.0 ; Height 2 (m) : 15.0 ; Height 3 (m) : 10.0 ; Height 4 (m) : 5.0
+
+Simulation B probes = Height 1 (m) : 20.0 ; Height 2 (m) : 15.0 ; Height 3 (m) : 10.0 ; Height 4 (m) : 5.0
+
+Simulation C probes = Height 1 (m) : 20.0 ; Height 2 (m) : 15.0 ; Height 3 (m) : 10.0 ; Height 4 (m) : 5.0
+
+Simulation D probes = Height 1 (m) : 20.0 ; Height 2 (m) : 15.0 ; Height 3 (m) : 10.0 ; Height 4 (m) : 5.0
+
+Simulation E probes = Height 1 (m) : 20.0 ; Height 2 (m) : 15.0 ; Height 3 (m) : 10.0 ; Height 4 (m) : 5.0
+
+Simulation A lines = Type_1 : - ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : -- ; Color_1 : black ; Color_2 : black ; Color_3 : black ; Color_4 : black ; Color_5 : blue ; Fillstyle : none
+
+Simulation B lines = Type_1 : - ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : red ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation C lines = Type_1 : - ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : green ; Color_2 : green ; Color_3 : gold ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation D lines = Type_1 : - ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : blue ; Color_2 : gold ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation E lines = Type_1 : -- ; Type_2 : -. ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : magenta ; Color_2 : navy ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+

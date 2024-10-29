@@ -1,0 +1,212 @@
+#--------------------------------------------------------------------------------------------------
+# ABOUT:
+# ------
+# This is an example of the ASCII form user-input data for running the 
+# code 'customPlots.py', with full documentation.
+# 
+# INSTRUCTIONS:
+# -------------
+# - Every line starting with a '#' is a comment and will be ignored by the code. 
+# - Appropriate parameters for each field (identified by a human-readable variable tag) 
+#   has to be entered after the '=' sign for each tag.
+# - The int/float/string/bool data format has been indicated for each variable in the documentation
+# - Between each TAG variable and values  - place a ":"
+# - To separate TAG variables             - place a ";"
+# 
+# Author:       Zachariah Irwin
+# Institution:  University of Colorado, Boulder
+# Last edits:   October 29, 2024
+# 
+#--------------------------------------------------------------------------------------------------
+# 1. File and Path Inputs:
+# ------------------------
+#--------------------------------------------------------------------------------------------------
+# Project directory
+# [STRING]
+#
+## Location of directory containing subdirectories for input/output
+#
+# Notes:
+# ------
+# - Set to None if simulation directory and output directory do not share a parent directory
+#
+#--------------------------------------------------------------------------------------------------
+Project directory = /home/sample/
+
+#--------------------------------------------------------------------------------------------------
+# Output directory
+# [STRING]
+#
+# Notes:
+# ------
+# - Location of directory containing subdirectories for output, default is a subdirectory of 
+#   'Project directory'
+#
+#--------------------------------------------------------------------------------------------------
+Output directory = plots/displacement/
+
+#--------------------------------------------------------------------------------------------------
+# File name with extension
+# [STRING]
+#--------------------------------------------------------------------------------------------------
+Name = disp.pdf
+
+#--------------------------------------------------------------------------------------------------
+# Animations
+# [STRING: True/False, FLOAT] 
+#
+# Notes:
+# ------
+# - DELETE: if contours are enabled, removes .png files after converting to .mp4 and .gif
+# - FRAMERATE: frames/sec for animated .mp4 and .gif
+# 
+#--------------------------------------------------------------------------------------------------
+Animations = DELETE : False ; FRAMERATE : 10
+
+#--------------------------------------------------------------------------------------------------
+# Scaling factors to multiply time, length, and stress/strain solution variables
+# [FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
+Scaling = TIME : 1 ; DISPLACEMENT : 1e-3 ; STRESS/STRAIN : 1e-3
+
+#--------------------------------------------------------------------------------------------------
+# Controls the ticks on the x-axis
+# [String: True/False, LIST(FLOATS), LIST(STRINGS), STRING: True/False]
+#--------------------------------------------------------------------------------------------------
+Plot x-ticks = ENABLED : False ; POSITIONS : 0,5,10,15,20,25,30 ; LABELS : 0,5,10,15,20,25,30 ; SECONDARY : False
+
+#--------------------------------------------------------------------------------------------------
+# Controls the ticks on the y-axis
+# [String: True/False, LIST(FLOATS), LIST(STRINGS), STRING: True/False]
+#--------------------------------------------------------------------------------------------------
+Plot y-ticks = ENABLED : False ; POSITIONS : 0,5,10,15,20,25,30 ; LABELS : 0,5,10,15,20,25,30 ; SECONDARY : False
+
+#--------------------------------------------------------------------------------------------------
+# Controls position of the legend
+# [STRING: True/False, FLOAT, FLOAT, STRING]
+#
+# Notes:
+# ------
+# - Options for POSITION are with reference to the plot bounding box
+#   - upper right
+#   - upper left (best for legends outside on the right)
+#   - lower right
+#   - lower left
+#   - center (best for legends inside)
+#--------------------------------------------------------------------------------------------------
+Plot legend = ENABLED : True ; X : 0.5 ; Y : 0.15 ; POSITION : center
+
+#--------------------------------------------------------------------------------------------------
+# Controls grid
+# [STRING: True/False, STRING]
+#--------------------------------------------------------------------------------------------------
+Plot grid = ENABLED : True ; WHICH : both
+
+#--------------------------------------------------------------------------------------------------
+# Controls plot limits
+# [FLOAT/None]
+#--------------------------------------------------------------------------------------------------
+Plot limits = XLIM_0 : 0.0 ; XLIM_1 : 30 ; YLIM_0 : -80 ; YLIM_1 : 40
+
+#--------------------------------------------------------------------------------------------------
+# Controls title
+# [STRING: True/False, STRING]
+#--------------------------------------------------------------------------------------------------
+Plot title = ENABLED : True ; TITLE : Title with $\rm{math}\eq x$
+
+#--------------------------------------------------------------------------------------------------
+# Controls resolution
+# [FLOAT]
+#--------------------------------------------------------------------------------------------------
+Plot DPI = 300
+
+#--------------------------------------------------------------------------------------------------
+# Controls font sizes
+# [FLOAT, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
+Plot font sizes = TITLE : 18 ; X-AXIS : 16 ; Y-AXIS : 16 ; LEGEND : 10
+
+#--------------------------------------------------------------------------------------------------
+# Simulation A/B/C/D/E/ directory
+# [STRING/None]
+#--------------------------------------------------------------------------------------------------
+Simulation A directory = /home/parent/directory/
+
+Simulation B directory = None
+
+Simulation C directory = None
+
+Simulation D directory = None
+
+Simulation E directory = None
+
+#--------------------------------------------------------------------------------------------------
+# 2. Plotting Parameters.
+# -------------------------
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+# Data points to skip
+# [INT, INT, INT, INT, INT]
+#
+# Note:
+# -----
+# For animations, the default frame skip is given by Simulation A = NUM
+#--------------------------------------------------------------------------------------------------
+Simulation A Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation B Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation C Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation D Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation E Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+#--------------------------------------------------------------------------------------------------
+# Titles for the different simulations
+# [STRING/None]
+#--------------------------------------------------------------------------------------------------
+Simulation A title = Label
+
+Simulation B title = None
+
+Simulation C title = None
+
+Simulation D title = None
+
+Simulation E title = None
+
+#--------------------------------------------------------------------------------------------------
+# Sampling locations measured from base of column
+# [FLOAT, FLOAT, FLOAT, FLOAT] or None
+#--------------------------------------------------------------------------------------------------
+Simulation A probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation B probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation C probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation D probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation E probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+#--------------------------------------------------------------------------------------------------
+# Line types
+# [STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING]
+#
+# Notes:
+# ------
+# - Markers:    https://matplotlib.org/stable/gallery/lines_bars_and_markers/marker_reference.html
+# - Linestyles: https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html
+# - Fillstyles: https://matplotlib.org/3.2.2/gallery/lines_bars_and_markers/marker_fillstyle_reference.html
+# - Colors:     https://matplotlib.org/stable/gallery/color/named_colors.html
+#--------------------------------------------------------------------------------------------------
+Simulation A lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : -- ; Color_1 : black ; Color_2 :  blue ; Color_3 : magenta ; Color_4 : black ; Color_5 : blue ; Fillstyle : none
+
+Simulation B lines = Type_1 : -- ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : red ; Color_2 : green ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation C lines = Type_1 : o ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation D lines = Type_1 : o ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation E lines = Type_1 : o ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none

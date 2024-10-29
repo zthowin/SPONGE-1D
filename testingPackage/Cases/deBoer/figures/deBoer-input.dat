@@ -1,0 +1,76 @@
+Project directory = testing
+
+Output directory = /testingPackage/Cases/deBoer/figures/
+
+Name = deBoer.pdf
+
+Animations = DELETE : False ; Framerate : 10
+
+Scaling = TIME : 1 ; DISPLACEMENT : 1e3 ; STRESS/STRAIN : 1e-3
+
+Plot x-ticks = ENABLED : False ; POSITIONS : 0,5,10,15,20,25,30 ; LABELS : 0,5,10,15,20,25,30 ; SECONDARY : False
+
+Plot y-ticks = ENABLED : False ; POSITIONS : -12,-8,-4,0,4,8,12 ; LABELS : -12,-8,-4,0,4,8,12 ; SECONDARY : False
+
+Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 0.5 ; Y : 0.905 ; POSITION : center
+#Plot legend = ENABLED : True ; HANDLE_LENGTH : 2.0 ; X : 1.02 ; Y : 1.02 ; POSITION : upper left
+
+Plot grid = ENABLED : True ; WHICH : both
+
+Plot limits = XLIM_0 : None ; XLIM_1 : None ; YLIM_0 : None ; YLIM_1 : None
+
+Plot title = ENABLED : False ; LOCATION : 1. ; TITLE : Comparison to de Boer's analytical solution for with $h_0^e \eq 1$m: 
+
+Plot DPI = 300
+
+Plot font sizes = TITLE : 16 ; X-AXIS : 16 ; Y-AXIS : 16 ; LEGEND : 10
+
+Simulation A directory = /testingPackage/Cases/deBoer/
+
+Simulation B directory = /testingPackage/Cases/deBoer/D/
+
+Simulation C directory = /testingPackage/Cases/deBoer/DB/
+
+Simulation D directory = None
+
+Simulation E directory = None
+
+Simulation A Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation B Skip = 2 ; 1 ; 1 ; 1 ; 1
+
+Simulation C Skip = 2 ; 1 ; 1 ; 1 ; 1
+
+Simulation D Skip = 2 ; 1 ; 1 ; 1 ; 1
+
+Simulation E Skip = 5 ; 1 ; 1 ; 1 ; 1
+
+Simulation A title = \hspace{0.28em}Analytical
+
+Simulation B title = $\ThreeField$, NB ($\beta\eq 0.25, \gamma\eq 0.5$), Darcy
+
+Simulation C title = $\ThreeField$, NB ($\beta\eq 0.25, \gamma\eq 0.5$), Darcy-Brinkman
+
+Simulation D title = None
+
+Simulation E title = None
+
+Simulation A probes = Height 1 (m) : 10 ; Height 2 (m) : 9 ; Height 3 (m) : 8 ; Height 4 (m) : 5
+
+Simulation B probes = Height 1 (m) : 10 ; Height 2 (m) : 9 ; Height 3 (m) : 8 ; Height 4 (m) : 5
+
+Simulation C probes = Height 1 (m) : 10 ; Height 2 (m) : 9 ; Height 3 (m) : 8 ; Height 4 (m) : 5
+
+Simulation D probes = Height 1 (m) : 10 ; Height 2 (m) : 9 ; Height 3 (m) : 8 ; Height 4 (m) : 5
+
+Simulation E probes = Height 1 (m) : 10 ; Height 2 (m) : 9 ; Height 3 (m) : 8 ; Height 4 (m) : 5
+
+Simulation A lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : -- ; Color_1 : orange ; Color_2 :  blue ; Color_3 : magenta ; Color_4 : black ; Color_5 : blue ; Fillstyle : none
+
+Simulation B lines = Type_1 : - ; Type_2 : -- ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : lime ; Color_2 : green ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation C lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : purple ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation D lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : red ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation E lines = Type_1 : o ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : green ; Color_2 : red ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none

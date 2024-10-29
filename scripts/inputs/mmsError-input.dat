@@ -1,0 +1,81 @@
+Project directory = None
+
+Output directory = /home/zach/Documents/School/Boulder/Graduate/Regueiro/Dissertation/figs/5.2/5.2.1/Convergence/Spatial/u-uf-pf/non-Linear-Hermite-NHEH/
+
+Name = error_S.pdf
+
+Animations = ENABLED : False ; Framerate : 10
+
+Scaling = TIME : 1 ; DISPLACEMENT : 1e3 ; STRESS/STRAIN : 1e3
+
+Plot x-ticks = ENABLED : False ; POSITIONS : 1e0,1e-1,1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8 ; LABELS : $10^0$,$10^{-1}$,$10^{-2}$,$10^{-3}$,$10^{-4}$,$10^{-5}$,$10^{-6}$,$10^{-7}$,$10^{-8}$ ; SECONDARY : False
+
+Plot y-ticks = ENABLED : False ; POSITIONS : 1e0,1e-1,1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8,1e-9,1e-10,1e-11,1e-12,1e-13,1e-14 ; LABELS : $10^0$,$10^{-1}$,$10^{-2}$,$10^{-3}$,$10^{-4}$,$10^{-5}$,$10^{-6}$,$10^{-7}$,$10^{-8}$,$10^{-9}$,$10^{-10}$,$10^{-11}$,$10^{-12}$,$10^{-13}$,$10^{-14}$ ; SECONDARY : True
+
+Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 0.5 ; Y : 0.908 ; POSITION : center
+#Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 1.2 ; Y : 1.02 ; POSITION : upper left
+
+Plot grid = ENABLED : True ; WHICH : both
+
+Plot limits = XLIM_0 : 1e0 ; XLIM_1 : 1e-3 ; YLIM_0 : 1e-16 ; YLIM_1 : 1e-1
+
+Plot title = ENABLED : True ; LOCATION : 1. ; TITLE : Spatial convergence of Q3H-Q3H-P1 elements 
+
+Plot DPI = 600
+
+Plot font sizes = TITLE : 16 ; X-AXIS : 16 ; Y-AXIS : 16 ; LEGEND : 10
+
+Simulation A directory = /home/zach/Documents/School/Boulder/Graduate/Regueiro/Code/SPONGE-1D/output/MMS/Convergence/Spatial/u-uf-pf/non-Linear-Hermite/
+
+Simulation B directory = None
+
+Simulation C directory = None
+
+Simulation D directory = None
+
+Simulation E directory = None
+
+Simulation A Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation B Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation C Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation D Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation E Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation A title = $\TwoFieldTh$, LS-DYNA, CF thermoelastic model
+
+Simulation B title = $\TwoFieldTh$, RKFNC (C), CF thermoelastic model, Q3H-T1
+
+Simulation C title = $\TwoFieldTh$, RKFNC (C), CF thermoelastic model, Q1-T1
+
+Simulation D title = $\TwoFieldTh$, RKFNC (L), CF thermoelastic model, Q1-T1
+
+Simulation E title = $\OneField$, RKFNC C. mass, neo-Hookean model, Q1
+
+Simulation A probes = Height 1 (m) : 0.05 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation B probes = Height 1 (m) : 0.05 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation C probes = Height 1 (m) : 0.05 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation D probes = Height 1 (m) : 0.05 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation E probes = Height 1 (m) : 0.1 ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation A lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : -- ; Color_1 : black ; Color_2 :  blue ; Color_3 : black ; Color_4 : black ; Color_5 : blue ; Fillstyle : none
+
+Simulation B lines = Type_1 : -- ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : red ; Color_2 : cyan ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation C lines = Type_1 : - ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : green ; Color_2 : lime ; Color_3 : gold ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation D lines = Type_1 : - ; Type_2 : o ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : blue ; Color_2 : magenta ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+Simulation E lines = Type_1 : - ; Type_2 : o ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : purple ; Color_2 : magenta ; Color_3 : red ; Color_4 : red ; Color_5 : red ; Fillstyle : none
+
+
+
+
+

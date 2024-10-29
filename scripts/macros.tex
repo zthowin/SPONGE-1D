@@ -1,0 +1,441 @@
+\newtheorem{theorem}{Theorem}
+
+
+\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\diffr}[1]{\diff{#1}{r}}
+\newcommand{\diffth}[1]{\diff{#1}{\theta}}
+\newcommand{\diffz}[1]{\diff{#1}{z}}
+
+\newcommand{\vth}{V_{\theta}}
+
+\newcommand{\twochoices}[2]{\left\{ \begin{array}{lcc}
+        \displaystyle #1 \\ \vspace{-10pt} \\
+        \displaystyle #2 \end{array} \right. } %}
+
+\newcommand{\threechoices}[3]{\left\{ \begin{array}{lcc}
+        #1 \\ #2 \\ #3 \end{array} \right. }    %}
+
+\newcommand{\fourchoices}[4]{\left\{ \begin{array}{lcc}
+        #1 \\ #2 \\ #3 \\ #4 \end{array} \right. }      %}
+
+\newcommand{\twovec}[2]{\left(\begin{array}{c} #1 \\ #2 \end{array}\right)}
+\newcommand{\threevec}[3]{\left(\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right)}
+\newcommand{\twomatrix}[4]{\left(\begin{array}{cc} #1 & #2 \\ #3 & #4 \end{array}\right)}
+
+\newcommand*{\rf}{{\rm f}}
+\newcommand*{\rs}{{\rm s}}
+\newcommand*{\fR}{{\rm fR}}
+\newcommand*{\sR}{{\rm sR}}
+\newcommand*{\sk}{{\rm skel}}
+%
+\newcommand*{\ljump}{\left[\!\left[}
+\newcommand*{\rjump}{\right]\!\right]}
+%
+\newcommand*{\bzero}{\mbox{$\boldsymbol{0}$}}
+\newcommand*{\bone}{\mbox{$\boldsymbol{1}$}}
+%
+\newcommand*{\bell}{\mbox{$\boldsymbol{\ell}$}}
+%
+\newcommand*{\baleph}{\mbox{$\boldsymbol{\aleph}$}}
+%
+\newcommand*{\ba}{\mbox{$\boldsymbol{a}$}}
+\newcommand*{\Bb}{\mbox{$\boldsymbol{b}$}}
+\newcommand*{\bb}{\mbox{$\boldsymbol{b}$}}
+\newcommand*{\bc}{\mbox{$\boldsymbol{c}$}}
+\newcommand*{\bd}{\mbox{$\boldsymbol{d}$}}
+\newcommand*{\be}{\mbox{$\boldsymbol{e}$}}
+\newcommand*{\Bf}{\mbox{$\boldsymbol{f}$}}
+\newcommand*{\bg}{\mbox{$\boldsymbol{g}$}}
+\newcommand*{\bh}{\mbox{$\boldsymbol{h}$}}
+\newcommand*{\bi}{\mbox{$\boldsymbol{i}$}}
+\newcommand*{\bj}{\mbox{$\boldsymbol{j}$}}
+\newcommand*{\bk}{\mbox{$\boldsymbol{k}$}}
+\newcommand*{\bl}{\mbox{$\boldsymbol{l}$}}
+\newcommand*{\Bm}{\mbox{$\boldsymbol{m}$}}
+\newcommand*{\bn}{\mbox{$\boldsymbol{n}$}}
+\newcommand*{\bo}{\mbox{$\boldsymbol{o}$}}
+\newcommand*{\bp}{\mbox{$\boldsymbol{p}$}}
+\newcommand*{\bq}{\mbox{$\boldsymbol{q}$}}
+\newcommand*{\br}{\mbox{$\boldsymbol{r}$}}
+\newcommand*{\bs}{\mbox{$\boldsymbol{s}$}}
+\newcommand*{\bt}{\mbox{$\boldsymbol{t}$}}
+\newcommand*{\bu}{\mbox{$\boldsymbol{u}$}}
+\newcommand*{\bv}{\mbox{$\boldsymbol{v}$}}
+\newcommand*{\bw}{\mbox{$\boldsymbol{w}$}}
+\newcommand*{\bx}{\mbox{$\boldsymbol{x}$}}
+\newcommand*{\by}{\mbox{$\boldsymbol{y}$}}
+\newcommand*{\bz}{\mbox{$\boldsymbol{z}$}}
+%
+\newcommand*{\bA}{\mbox{$\boldsymbol{A}$}}
+\newcommand*{\bB}{\mbox{$\boldsymbol{B}$}}
+\newcommand*{\bC}{\mbox{$\boldsymbol{C}$}}
+\newcommand*{\bD}{\mbox{$\boldsymbol{D}$}}
+\newcommand*{\bE}{\mbox{$\boldsymbol{E}$}}
+\newcommand*{\bF}{\mbox{$\boldsymbol{F}$}}
+\newcommand*{\bG}{\mbox{$\boldsymbol{G}$}}
+\newcommand*{\bH}{\mbox{$\boldsymbol{H}$}}
+\newcommand*{\bI}{\mbox{$\boldsymbol{I}$}}
+\newcommand*{\bJ}{\mbox{$\boldsymbol{J}$}}
+\newcommand*{\bK}{\mbox{$\boldsymbol{K}$}}
+\newcommand*{\bL}{\mbox{$\boldsymbol{L}$}}
+\newcommand*{\bM}{\mbox{$\boldsymbol{M}$}}
+\newcommand*{\bN}{\mbox{$\boldsymbol{N}$}}
+\newcommand*{\bO}{\mbox{$\boldsymbol{O}$}}
+\newcommand*{\bP}{\mbox{$\boldsymbol{P}$}}
+\newcommand*{\bQ}{\mbox{$\boldsymbol{Q}$}}
+\newcommand*{\bR}{\mbox{$\boldsymbol{R}$}}
+\newcommand*{\bS}{\mbox{$\boldsymbol{S}$}}
+\newcommand*{\bT}{\mbox{$\boldsymbol{T}$}}
+\newcommand*{\bU}{\mbox{$\boldsymbol{U}$}}
+\newcommand*{\bV}{\mbox{$\boldsymbol{V}$}}
+\newcommand*{\bW}{\mbox{$\boldsymbol{W}$}}
+\newcommand*{\bX}{\mbox{$\boldsymbol{X}$}}
+\newcommand*{\bY}{\mbox{$\boldsymbol{Y}$}}
+\newcommand*{\bZ}{\mbox{$\boldsymbol{Z}$}}
+% tiny boldmath
+\newcommand*{\btq}{\mbox{\tiny $\boldsymbol{q}$}}
+\newcommand*{\btT}{\mbox{\tiny $\boldsymbol{T}$}}
+%
+\newcommand*{\balpha}{\mbox{$\boldsymbol{\alpha}$}}
+\newcommand*{\bbeta}{\mbox{$\boldsymbol{\beta}$}}
+\newcommand*{\bgamma}{\mbox{$\boldsymbol{\gamma}$}}
+\newcommand*{\bdelta}{\mbox{$\boldsymbol{\delta}$}}
+\newcommand*{\bepsilon}{\mbox{$\boldsymbol{\epsilon}$}}
+\newcommand*{\bvarepsilon}{\mbox{$\boldsymbol{\varepsilon}$}}
+\newcommand*{\bzeta}{\mbox{$\boldsymbol{\zeta}$}}
+\newcommand*{\bdeta}{\mbox{$\boldsymbol{\eta}$}}
+\newcommand*{\btheta}{\mbox{$\boldsymbol{\theta}$}}
+\newcommand*{\bvartheta}{\mbox{$\boldsymbol{\vartheta}$}}
+\newcommand*{\biota}{\mbox{$\boldsymbol{\iota}$}}
+\newcommand*{\bkappa}{\mbox{$\boldsymbol{\kappa}$}}
+\newcommand*{\blambda}{\mbox{$\boldsymbol{\lambda}$}}
+\newcommand*{\bmu}{\mbox{$\boldsymbol{\mu}$}}
+\newcommand*{\bnu}{\mbox{$\boldsymbol{\nu}$}}
+\newcommand*{\bxi}{\mbox{$\boldsymbol{\xi}$}}
+\newcommand*{\bpi}{\mbox{$\boldsymbol{\pi}$}}
+\newcommand*{\bvarpi}{\mbox{$\boldsymbol{\varpi}$}}
+\newcommand*{\brho}{\mbox{$\boldsymbol{\rho}$}}
+\newcommand*{\bvarrho}{\mbox{$\boldsymbol{\varrho}$}}
+\newcommand*{\bsigma}{\mbox{$\boldsymbol{\sigma}$}}
+\newcommand*{\bvarsigma}{\mbox{$\boldsymbol{\varsigma}$}}
+\newcommand*{\btau}{\mbox{$\boldsymbol{\tau}$}}
+\newcommand*{\bupsilon}{\mbox{$\boldsymbol{\upsilon}$}}
+\newcommand*{\bphi}{\mbox{$\boldsymbol{\phi}$}}
+\newcommand*{\bvarphi}{\mbox{$\boldsymbol{\varphi}$}}
+\newcommand*{\bchi}{\mbox{$\boldsymbol{\chi}$}}
+\newcommand*{\bpsi}{\mbox{$\boldsymbol{\psi}$}}
+\newcommand*{\bomega}{\mbox{$\boldsymbol{\omega}$}}
+%
+\newcommand*{\bGamma}{\mbox{$\boldsymbol{\Gamma}$}}
+\newcommand*{\bDelta}{\mbox{$\boldsymbol{\Delta}$}}
+\newcommand*{\bTheta}{\mbox{$\boldsymbol{\Theta}$}}
+\newcommand*{\bLambda}{\mbox{$\boldsymbol{\Lambda}$}}
+\newcommand*{\bXi}{\mbox{$\boldsymbol{\Xi}$}}
+\newcommand*{\bPi}{\mbox{$\boldsymbol{\Pi}$}}
+\newcommand*{\bSigma}{\mbox{$\boldsymbol{\Sigma}$}}
+\newcommand*{\bUpsilon}{\mbox{$\boldsymbol{\Upsilon}$}}
+\newcommand*{\bPhi}{\mbox{$\boldsymbol{\Phi}$}}
+\newcommand*{\bvarPhi}{\mbox{$\boldsymbol{\varPhi}$}}
+\newcommand*{\bPsi}{\mbox{$\boldsymbol{\Psi}$}}
+\newcommand*{\bOmega}{\mbox{$\boldsymbol{\Omega}$}}
+%
+\newcommand*{\nGamma}{\mathnormal{\Gamma}}
+\newcommand*{\nDelta}{\mathnormal{\Delta}}
+\newcommand*{\nTheta}{\mathnormal{\Theta}}
+\newcommand*{\nLambda}{\mathnormal{\Lambda}}
+\newcommand*{\nXi}{\mathnormal{\Xi}}
+\newcommand*{\nPi}{\mathnormal{\Pi}}
+\newcommand*{\nSigma}{\mathnormal{\Sigma}}
+\newcommand*{\nUpsilon}{\mathnormal{\Upsilon}}
+\newcommand*{\nPhi}{\mathnormal{\Phi}}
+\newcommand*{\nOmega}{\mathnormal{\Omega}}
+%
+\newcommand*{\cA}{\mathcal{A}}
+\newcommand*{\cB}{\mathcal{B}}
+\newcommand*{\cC}{\mathcal{C}}
+\newcommand*{\cD}{\mathcal{D}}
+\newcommand*{\cE}{\mathcal{E}}
+\newcommand*{\cF}{\mathcal{F}}
+\newcommand*{\cG}{\mathcal{G}}
+\newcommand*{\cH}{\mathcal{H}}
+\newcommand*{\cI}{\mathcal{I}}
+\newcommand*{\cJ}{\mathcal{J}}
+\newcommand*{\cK}{\mathcal{K}}
+\newcommand*{\cL}{\mathcal{L}}
+\newcommand*{\cM}{\mathcal{M}}
+\newcommand*{\cN}{\mathcal{N}}
+\newcommand*{\cO}{\mathcal{O}}
+\newcommand*{\cP}{\mathcal{P}}
+\newcommand*{\cQ}{\mathcal{Q}}
+\newcommand*{\cR}{\mathcal{R}}
+\newcommand*{\cS}{\mathcal{S}}
+\newcommand*{\cT}{\mathcal{T}}
+\newcommand*{\cU}{\mathcal{U}}
+\newcommand*{\cV}{\mathcal{V}}
+\newcommand*{\cW}{\mathcal{W}}
+\newcommand*{\cX}{\mathcal{X}}
+\newcommand*{\cY}{\mathcal{Y}}
+\newcommand*{\cZ}{\mathcal{Z}}
+%
+\newcommand*{\bcA}{\mbox{$\boldsymbol{\mathcal{A}}$}}
+\newcommand*{\bcB}{\mbox{$\boldsymbol{\mathcal{B}}$}}
+\newcommand*{\bcC}{\mbox{$\boldsymbol{\mathcal{C}}$}}
+\newcommand*{\bcD}{\mbox{$\boldsymbol{\mathcal{D}}$}}
+\newcommand*{\bcE}{\mbox{$\boldsymbol{\mathcal{E}}$}}
+\newcommand*{\bcF}{\mbox{$\boldsymbol{\mathcal{F}}$}}
+\newcommand*{\bcG}{\mbox{$\boldsymbol{\mathcal{G}}$}}
+\newcommand*{\bcH}{\mbox{$\boldsymbol{\mathcal{H}}$}}
+\newcommand*{\bcI}{\mbox{$\boldsymbol{\mathcal{I}}$}}
+\newcommand*{\bcJ}{\mbox{$\boldsymbol{\mathcal{J}}$}}
+\newcommand*{\bcK}{\mbox{$\boldsymbol{\mathcal{K}}$}}
+\newcommand*{\bcL}{\mbox{$\boldsymbol{\mathcal{L}}$}}
+\newcommand*{\bcM}{\mbox{$\boldsymbol{\mathcal{M}}$}}
+\newcommand*{\bcN}{\mbox{$\boldsymbol{\mathcal{N}}$}}
+\newcommand*{\bcO}{\mbox{$\boldsymbol{\mathcal{O}}$}}
+\newcommand*{\bcP}{\mbox{$\boldsymbol{\mathcal{P}}$}}
+\newcommand*{\bcQ}{\mbox{$\boldsymbol{\mathcal{Q}}$}}
+\newcommand*{\bcR}{\mbox{$\boldsymbol{\mathcal{R}}$}}
+\newcommand*{\bcS}{\mbox{$\boldsymbol{\mathcal{S}}$}}
+\newcommand*{\bcT}{\mbox{$\boldsymbol{\mathcal{T}}$}}
+\newcommand*{\bcU}{\mbox{$\boldsymbol{\mathcal{U}}$}}
+\newcommand*{\bcV}{\mbox{$\boldsymbol{\mathcal{V}}$}}
+\newcommand*{\bcW}{\mbox{$\boldsymbol{\mathcal{W}}$}}
+\newcommand*{\bcX}{\mbox{$\boldsymbol{\mathcal{X}}$}}
+\newcommand*{\bcY}{\mbox{$\boldsymbol{\mathcal{Y}}$}}
+\newcommand*{\bcZ}{\mbox{$\boldsymbol{\mathcal{Z}}$}}
+%
+\newcommand{\msc}[1]{\mathscr{#1}}
+%
+\newcommand*{\bbA}{\mbox{$\boldsymbol{\mathbb{A}}$}}
+\newcommand*{\bbC}{\mbox{$\boldsymbol{\mathbb{C}}$}}
+%
+\newcommand*{\bnabla}{\mbox{$\boldsymbol{\nabla}$}}
+%
+% FE operator symbol from Krishna
+\font\bigestssbx=cmssbx10 scaled \magstep4
+\def\Asem#1#2{\mathop{\lower 5.5pt \hbox{\bigestssbx A}}_{#1}^{#2}}
+\font\smallestssbx=cmssbx10 scaled \magstep2
+\def\Asemsmall#1#2{\mathop{\lower 2.5pt \hbox{\smallestssbx A}}_{#1}^{#2}}
+\def\asem#1#2{
+              \ifmmode
+                 \ifinner
+                    \raise0.9pt\hbox{$\scriptstyle\bAs$}_{#1}^{#2}
+                 \else
+                    \Asem{#1}{#2}
+                 \fi
+              \fi
+              }
+%
+%--------------------
+% BEGIN ZACH'S MACROS
+%--------------------
+\newcommand{\fig}[1]{Fig.~\ref{#1}} % Figure
+\newcommand{\sect}[1]{Sec.~\ref{#1}} % Section
+%
+% Redeclare
+%
+\makeatletter
+\newcommand\RedeclareMathOperator{%
+  \@ifstar{\def\rmo@s{m}\rmo@redeclare}{\def\rmo@s{o}\rmo@redeclare}%
+}
+%% this is taken from \renew@command
+\newcommand\rmo@redeclare[2]{%
+  \begingroup \escapechar\m@ne\xdef\@gtempa{{\string#1}}\endgroup
+  \expandafter\@ifundefined\@gtempa
+     {\@latex@error{\noexpand#1undefined}\@ehc}%
+     \relax
+  \expandafter\rmo@declmathop\rmo@s{#1}{#2}}
+%% This is just \@declmathop without \@ifdefinable
+\newcommand\rmo@declmathop[3]{%
+  \DeclareRobustCommand{#2}{\qopname\newmcodes@#1{#3}}%
+}
+%\@onlypreamble\RedeclareMathOperator
+\makeatother
+
+%
+% Macros for multiphase notation
+%
+\newcommand*{\araise}{^{\alpha}}
+\newcommand*{\aRraise}{^{\alpha \text{R}}}
+\newcommand*{\alower}{_{\alpha}}
+\newcommand*{\Dt}[1]{\frac{D{#1}}{\mathop{Dt}}}
+\newcommand*{\Dts}[1]{\frac{\mathop{D^\rs}{#1}}{\mathop{Dt}}}
+\newcommand*{\Dtf}[1]{\frac{\mathop{D^\rf}{#1}}{\mathop{Dt}}}
+\newcommand*{\Dta}[1]{\frac{\mathop{D\araise}{#1}}{\mathop{Dt}}}
+\newcommand*{\DtaAp}{\frac{\mathop{D\araise}}{\mathop{Dt}}}
+\newcommand*{\dt}[1]{D_t{#1}}
+\newcommand*{\dts}[1]{D_t^\rs{#1}}
+\newcommand*{\dtf}[1]{D_t^\rf{#1}}
+\newcommand*{\dta}[1]{D_t\araise{#1}}
+\newcommand*{\dtaAp}{D_t\araise}
+\newcommand*{\fmsub}{_{ij(\rf)}}
+\newcommand*{\fMsub}{_{IJ(\rf)}}
+\newcommand*{\fvsub}{_{i(\rf)}}
+\newcommand*{\fVsub}{_{I(\rf)}}
+\newcommand*{\smsub}{_{ij(\rs)}}
+\newcommand*{\svsub}{_{i(\rs)}}
+\newcommand*{\intSkelPhase}{\int\limits_{\cB_0\araise}}
+\newcommand*{\intCurPhase}{\int\limits_{\cB_t\araise}}
+\newcommand*{\vecDarcy}{\big(n^\rf\tilde{\bv}_\rf\big)}
+\newcommand*{\vDarcy}{\big(n^\rf\tilde{v}\fvsub\big)}
+\newcommand*{\fnf}{\frac{3}{n^\rf} - \frac{2n^\rf}{1-\left(n^\rf\right)^2}}
+\newcommand*{\fnfh}{\frac{3}{n^{\rf,h^e}} - \frac{2n^{\rf,h^e}}{1-\big(n^{\rf,h^e}\big)^2}}
+\newcommand*{\rhofr}{\rho^\text{fR}}
+\newcommand*{\rhofrh}{\rho^{\text{fR}, h^e}}
+\newcommand*{\rhosr}{\rho^\text{sR}}
+\newcommand*{\DpfDX}{\frac{\partial p_\rf}{\partial X}}
+\newcommand*{\DpfDXh}{\frac{\partial p_\rf^{h^e}}{\partial X}}
+\newcommand*{\masssupplya}{\hat{\rho}\araise}
+\newcommand*{\masssupplys}{\hat{\rho}^\rs}
+\newcommand*{\masssupplyf}{\hat{\rho}^\rf}
+\newcommand*{\momproda}{\bh\araise}
+\newcommand*{\momprods}{\bh^\rs}
+\newcommand*{\momprodf}{\bh^\rf}
+\newcommand*{\OneField}{(\bu)}
+\newcommand*{\TwoField}{(\bu\text{-}p_\rf)}
+\newcommand*{\TwoFieldTh}{(\bu\text{-}\theta)}
+\newcommand*{\ThreeField}{(\bu\text{-}\bu_\rf\text{-}p_\rf)}
+\newcommand*{\FourField}{(\bu\text{-}p_\rf\text{-}\theta^\rs\text{-}\theta^\rf)}
+\newcommand*{\FiveField}{(\bu\text{-}\bu_\rf\text{-}p_\rf\text{-}\theta^\rs\text{-}\theta^\rf)}
+%
+% Custom math operators
+%
+\def\onedot{$\mathsurround0pt\ldotp$}
+\def\cddot{% two dots stacked vertically
+  \mathbin{\vcenter{\baselineskip.67ex
+    \hbox{\onedot}\hbox{\onedot}}
+    }}
+%\newcommand\defeq{\stackrel{\mathclap{\normalfont\mbox{def}}}{=}}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\sech}{sech}
+\RedeclareMathOperator{\div}{div}
+\DeclareMathOperator{\Div}{DIV_\rs}
+\DeclareMathOperator{\DDiv}{DIV}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Grad}{GRAD_\rs}
+\DeclareMathOperator{\GGrad}{GRAD}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\dv}{\mathop{dv}}
+\newcommand{\dV}{\mathop{dV}}
+\newcommand{\da}{\mathop{da}}
+\newcommand{\dA}{\mathop{dA}}
+\newcommand{\dE}{\mathop{d\eta}}
+\newcommand{\dXi}{\mathop{d\xi}}
+\newcommand{\dX}{\mathop{dX}}
+\newcommand{\intBRef}{\int\limits_{\cB_0}}
+\newcommand{\intBRefa}{\int\limits_{\cB_0^\alpha}}
+\newcommand{\intBCur}{\int\limits_{\cB}}
+\newcommand{\intGRef}{\int\limits_{\Gamma_0}}
+\newcommand{\intGCur}{\int\limits_{\Gamma}}
+\newcommand{\intOneD}{\int\limits_0^{X=H}}
+\newcommand{\intEta}{\int\limits_{-1}^1}
+\newcommand{\INT}{^{\text{INT}}}
+\newcommand{\EXT}{^{\text{EXT}}}
+\newcommand{\INTH}{^{\text{INT},h}}
+\newcommand{\EXTH}{^{\text{EXT},h}}
+%
+% Finite element shortcuts
+%
+\newcommand{\NEU}{\bN^{e,u}}
+\newcommand{\NEUF}{\bN^{e,u_\rf}}
+\newcommand{\NEP}{\bN^{e,p_\rf}}
+\newcommand{\BEU}{\bB^{e,u}}
+\newcommand{\HEU}{\bH^{e,u}}
+\newcommand{\BEUF}{\bB^{e,u_\rf}}
+\newcommand{\HEUF}{\bH^{e,u_\rf}}
+\newcommand{\BEP}{\bB^{e,p_\rf}}
+\newcommand{\NETS}{\bN^{e,\theta^\rs}}
+\newcommand{\NETF}{\bN^{e,\theta^\rf}}
+\newcommand{\BETS}{\bB^{e,\theta^\rs}}
+\newcommand{\BETF}{\bB^{e,\theta^\rf}}
+%
+\newcommand{\ndofse}{n_\text{dof}^{s,e}}
+\newcommand{\ndoffe}{n_\text{dof}^{f,e}}
+\newcommand{\ndofpe}{n_\text{dof}^{p_\rf,e}}
+\newcommand{\ndoftse}{n_\text{dof}^{\theta^\rs,e}}
+\newcommand{\ndoftfe}{n_\text{dof}^{\theta^\rf,e}}
+\newcommand{\ndofs}{n_\text{dof}^s}
+\newcommand{\ndoff}{n_\text{dof}^f}
+\newcommand{\ndofp}{n_\text{dof}^{p_\rf}}
+%
+\newcommand{\testpf}{w^{p_\rf}}
+\newcommand{\testuvec}{\bw^{u}}
+\newcommand{\testuveci}{w_i^u}
+\newcommand{\testu}{w^u}
+\newcommand{\testufvec}{\bw^{u_\rf}}
+\newcommand{\testufveci}{w_i^{u_\rf}}
+\newcommand{\testuf}{w^{u_\rf}}
+\newcommand{\testts}{w^{\theta^\rs}}
+\newcommand{\testtf}{w^{\theta^\rf}}
+\newcommand{\testt}{w^\theta}
+%
+\newcommand{\testuvecintp}{\bc^{u}}
+\newcommand{\testufvecintp}{\bc^{u_\rf}}
+\newcommand{\testpfintp}{\bc^{p_\rf}}
+\newcommand{\testuvecintpe}{\bc^{u,e}}
+\newcommand{\testufvecintpe}{\bc^{u_\rf,e}}
+\newcommand{\testpfintpe}{\bc^{p_\rf,e}}
+\newcommand{\testtsintpe}{\bc^{\theta^\rs,e}}
+\newcommand{\testtfintpe}{\bc^{\theta^\rf,e}}
+\newcommand{\testtintpe}{\bc^{\theta,e}}
+%
+\newcommand{\testuh}{w^{u^{h^e}}}
+\newcommand{\testufh}{w^{u_\rf^{h^e}}}
+\newcommand{\testpfh}{w^{p_\rf^{h^e}}} 
+\newcommand{\testtsh}{w^{\theta^{\rs,h^e}}}
+\newcommand{\testtfh}{w^{\theta^{\rf,h^e}}}
+\newcommand{\testth}{w^{\theta^{h^e}}}
+%
+\newcommand{\trialpf}{\bpi}
+\newcommand{\trialpfvec}{\pi_{a}}
+\newcommand{\trialpft}{\dot{\bpi}}
+\newcommand{\trialpftvec}{\dot{\pi}_{\rf}}
+\newcommand{\trialpftt}{\ddot{\bpi}}
+\newcommand{\trialpfttvec}{\ddot{\pi}_{\rf}}
+%
+\newcommand{\trialu}{\bd}
+\newcommand{\trialut}{\dot{\bd}}
+\newcommand{\trialutt}{\ddot{\bd}}
+\newcommand{\trialuvec}{d_a}
+\newcommand{\trialutvec}{\dot{d}_a}
+\newcommand{\trialuttvec}{\ddot{d}_a}
+\newcommand{\trialui}{d}
+%
+\newcommand{\trialuf}{\bd_\rf}
+\newcommand{\trialuft}{\dot{\bd}_\rf}
+\newcommand{\trialuftt}{\ddot{\bd}_\rf}
+\newcommand{\trialufvec}{d_{a,\rf}}
+\newcommand{\trialuftvec}{\dot{d}_{a,\rf}}
+\newcommand{\trialufttvec}{\ddot{d}_{a,\rf}}
+%
+\newcommand{\trialts}{\bvartheta^\rs}
+\newcommand{\trialtst}{\dot{\bvartheta}^\rs}
+\newcommand{\trialtste}{\dot{\bvartheta}^{\rs,e}}
+\newcommand{\trialtsvec}{\vartheta_a^\rs}
+\newcommand{\trialtstvec}{\dot{\vartheta}_a^\rs}
+\newcommand{\trialtstvece}{\dot{\vartheta}_a^{\rs,e}}
+%
+\newcommand{\trialtf}{\bvartheta^\rf}
+\newcommand{\trialtft}{\dot{\bvartheta}^\rf}
+\newcommand{\trialtfte}{\dot{\bvartheta}^{\rf,e}}
+\newcommand{\trialtfvec}{\vartheta_a^\rf}
+\newcommand{\trialtftvec}{\dot{\vartheta}_a^\rf}
+\newcommand{\trialtftvece}{\dot{\vartheta}_a^{\rf,e}}
+%
+\newcommand{\trialt}{\bvartheta}
+\newcommand{\trialtt}{\dot{\bvartheta}}
+\newcommand{\trialtte}{\dot{\bvartheta}^e}
+\newcommand{\trialtvec}{\vartheta_a}
+\newcommand{\trialttvec}{\dot{\vartheta}_a}
+\newcommand{\trialttvece}{\dot{\vartheta}_a^e}
+    
+\let\leftbraceOrig=\{
+\let\rightbraceOrig=\}
+\def\{{\left\leftbraceOrig}
+\def\}{\right\rightbraceOrig}
+
+\newcommand*{\eq}{=}
+\newcommand*{\defeq}{\mathrel{\vcenter{\baselineskip0.4ex \lineskiplimit0pt
+            \hbox{\scriptsize.}\hbox{\scriptsize.}}}%
+    =}
+

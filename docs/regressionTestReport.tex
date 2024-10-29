@@ -1,0 +1,83 @@
+% ==
+% ||
+% || Document Class Options
+% ||
+% ==
+\documentclass[12pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd,mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage[hang]{subfigure}
+\usepackage{courier}
+\usepackage[square,comma,numbers,sort&compress]{natbib}
+\usepackage[yyyymmdd,hhmmss]{datetime}
+
+\bibliographystyle{./plainnat_new}
+\counterwithin{figure}{subsection}
+\counterwithin{table}{subsection}
+
+\renewcommand{\thetable}{\thesubsection(\alph{table})}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.01in}
+
+% \WarningFilter{latex}{Empty bibliography}
+% \makeatletter
+% \def\blx@warn@bibempty{}
+% \makeatother
+
+\input{./macros.tex}
+
+% =============================================================================
+% ||
+% ||                 B E G I N   D O C U M E N T
+% ||
+% =============================================================================
+
+
+\begin{document}
+
+\title{{\small{\it Regression Test Report for}}  \\ \texttt{SPONGE-1D} \\(DRAFT)}
+
+\author{{by} Zachariah Irwin}
+
+\maketitle
+\titlepage
+\tableofcontents
+
+
+% =============================================================================
+% ||
+% ||               M A I N   T E X T                  
+% ||
+% ||   Large, well defined chapters are separated into different files and
+% ||   are incorporated using the \input command.  The smaller, less self-
+% ||   contained chapters, or the ones under development, are included 
+% ||   directly (for now).
+% ||
+% =============================================================================
+
+
+\section{Introduction}
+
+Except for this Introduction, this report is automatically generated using
+Python scripts.
+
+\section{Regression Test Suite}
+This regression test suite showcases the custom, Lagrangian finite-element code (\texttt{SPONGE-1D}) that solves the balance of momentum, balance of mass of the mixture (if applicable), balance of linear momentum of the pore fluid (if applicable) in the reference configuration of the solid under the assumption of 1-D uniaxial strain, unidirectional pore fluid flow (if applicable). The detailed governing equations are provided in subsequent subsections.
+
+\IfFileExists{MMS-Tests.tex}{\input{MMS-Tests.tex} \clearpage}{}
+\IfFileExists{deBoer-Tests.tex}{\input{deBoer-Tests.tex} \clearpage}{}
+\IfFileExists{Shock-Tests.tex}{\input{Shock-Tests.tex} \clearpage}{}
+
+\clearpage
+\bibliography{references.bib}
+
+% =============================================================================
+% ||
+% ||               E N D I N G
+% ||
+% =============================================================================
+
+\end{document}

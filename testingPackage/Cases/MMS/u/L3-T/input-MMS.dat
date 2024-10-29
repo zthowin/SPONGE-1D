@@ -1,0 +1,83 @@
+Physics = u
+
+Dynamics = True
+
+Project directory = /null/
+
+Output directory = null/
+
+Simulation timing = START (s) : 0.0 ; STOP (s) : 0.01 ; DELTA (s) : 1e-5 ; WRITE : 10
+
+Integration setup = SCHEME : Newmark-beta : LUMPING : False
+
+Adaptive time stepping setup = ENABLED : False ; ITERATIONS : 6 ; INCREASE : 1.1 ; DECREASE : 0.25 ; MAX (s) : 1e-3 ; MIN (s) : 1e-8 ; START (s) : 1e-4 ; STOP (s) : 1e-3 ; SAVE : False
+
+Newmark parameters = BETA : 0.25 ; GAMMA : 0.5 ; ALPHA : 0.0 ; SUPG : False
+
+Error parameters = RELATIVE TOLERANCE : 1e-10 ; ABSOLUTE TOLERANCE : 1e-10 ; MAX ITERATIONS : 50 ; Norm : 2 ; SF : None
+
+Element parameters = TYPE : Q2 ; NUMBER : 1 ; NUMBER OF QUADRATURE POINTS : 5
+
+Constitutive modeling = FLUID : None ; SOLID : neo-Hookean ; VISCOSITY (s) : 0.0 ; C0 : 0.0 ; C1 : 0.0 ; ALPHA : 0.0 ; SUPG : False
+
+Lung parameters = C1 : 0 ; C2 : 0 ; B1 : 0 ; mu_prime : 0 ; Z0 : 0 ; alpha_D : 0 ; omega_D : 0
+
+Column geometry = SHAPE : Rectangle ; RADIUS/WIDTH (m) : 1 ; HEIGHT (m) : 1
+
+Young's modulus (Pa) = Calculate
+
+Poisson's ratio = Calculate
+
+Shear modulus (G, mu, Pa) = 1
+
+Bulk moduli (Pa) = KSkel : Calculate ; KF : None ; KS : None
+
+Lambda (Pa) = 1
+
+Body forces (N/kg) = GRAVITY : 0
+
+Volume fraction of constituents = FLUID : 0
+
+Real mass density of constituents (kg/m^3) = SOLID : 2 ; FLUID : None
+
+Specific heat of constituents (J/kg-K) = SOLID : None ; FLUID : None
+
+Volumetric CTE of constituents (1/K) = SOLID : None ; FLUID : None
+
+Thermal conductivity of constituents (W/m-K) = SOLID : None ; FLUID : None
+
+Convective heat transfer (W/m^3-K) = None
+
+Hydraulic conductivity function = TYPE : None ; M : None
+
+Intrinsic permeability (m^2) = None
+
+Pore fluid viscosity = SHEAR (Pa-s) : None ; BULK (Pa-s) : None ; ENABLE : False
+
+Solid displacement BC = APPLY : True ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m) : 0 ; T0 (s) : 0 ; T1 (s) : 0.01
+
+Solid velocity BC = APPLY : False ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Traction BC = APPLY : True ; LOCATION(S) : Top ; APPLICATION-TYPE : MMS ; FREQUENCY (rad/s) : 0 ; MAGNITUDE (Pa) : 0 ; T0 (s) : 0 ; T1 (s) : 0.01
+
+Pore fluid pressure IC (Pa) = 0
+
+Pore fluid pressure BC = APPLY : False ; LOCATION(S) : Top ; APPLICATION-TYPE : None ; MAGNITUDE (Pa) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Pore fluid flux BC = APPLY : False ; LOCATIONS(S) : Top ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Fluid displacement BC = APPLY : False ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Fluid velocity BC = APPLY : False ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Temperature IC (K) = SOLID : None ; FLUID : None
+
+Solid temperature BC = APPLY : False ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (K) : 310 ; T0 (s) : 0 ; T1 (s) : 0
+
+Fluid temperature BC = APPLY : False ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (K) : 310 ; T0 (s) : 0 ; T1 (s) : 0
+
+Solid heat flux BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : Constant ; MAGNITUDE (W/m^2) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+Fluid heat flux BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : Constant ; MAGNITUDE (W/m^2) : 0 ; T0 (s) : 0 ; T1 (s) : 0
+
+MMS = APPLY : True ; SOLID : S2T3 ; PRESSURE : None ; FLUID ; None

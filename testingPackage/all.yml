@@ -1,0 +1,8 @@
+all: [MMS/u/L0-T,MMS/u/L1-T,MMS/u/L2-T,MMS/u/L3-T,MMS/u/L4-T,
+      MMS/uufpf/L0-T,MMS/uufpf/L1-T,MMS/uufpf/L2-T,MMS/uufpf/L3-T,MMS/uufpf/L4-T,
+      deBoer/DB,deBoer/D]
+
+MMS: [MMS/u/L0-T,MMS/u/L1-T,MMS/u/L2-T,MMS/u/L3-T,MMS/u/L4-T,
+      MMS/uufpf/L0-T,MMS/uufpf/L1-T,MMS/uufpf/L2-T,MMS/uufpf/L3-T,MMS/uufpf/L4-T]
+
+deBoer: [deBoer/DB,deBoer/D]

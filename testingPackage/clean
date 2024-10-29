@@ -1,0 +1,55 @@
+#!/bin/bash
+if [ -z ${REPO+x} ] ; then echo "ERROR: REPO environment variable not set." && exit 1 ; fi
+
+{
+    top=false
+    testing=false
+    cases=false
+    docs=false
+    echo "The following files will be removed:"
+    echo
+    cd $REPO/
+    if [[ -n `find . \( -name "TestResult_summary" -or -name "*.log" \)` ]]
+        then top=true && find $(pwd)/ \( -name "TestResult_summary" -or -name "*.log" \) -print
+    fi
+    cd $REPO/testingPackage/
+    if [[ -n `find . -type f -not \( -name "*.dat" -or -name "*_std.npy" -or -name "*.py" -or -name "clean" -or -name "*.yml" \) -print` ]]
+        then testing=true && find $(pwd)/ -type f -not \( -name "*.dat" -or -name "*_std.npy" -or -name "*.py" -or -name "clean" -or -name "*.yml" \) -print
+    fi
+    if [[ -n `find ./Cases/ -name "*compare.py" -print` ]]
+        then cases=true && find $(pwd)/Cases/ -name "*compare.py" -print
+    fi
+    cd $REPO/docs/
+    if [[ -n `find ./ \( -name "*.aux" -or -name "*.out" -or -name "*.log" -or -name "*.toc" -or -name "*.bbl" -or -name "*.blg" -or -name "*Tests*.tex" \) -print` ]]
+        then docs=true && find $(pwd)/ \( -name "*.aux" -or -name "*.out" -or -name "*.log" -or -name "*.toc" -or -name "*.bbl" -or -name "*.blg"  -or -name "*Tests*.tex" \) -print
+    fi
+} || {
+    if ! [[ top || testing || cases || docs ]]
+        then echo "ERROR: Could not find removable files." && exit 1
+    fi
+}
+echo
+read -p "Continue? (y/n): " confirm
+if [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] ; then {
+    echo
+    echo "Removing files..."
+    {
+        cd $REPO &&
+        find . \( -name "TestResult_summary" -or -name "*.log" \) -delete
+        cd $REPO/testingPackage/ &&
+        find . -type f -not \( -name "*.dat" -or -name "*_std.npy" -or -name "*.py" -or -name "clean" -or -name "*.yml" \) -delete
+        find ./Cases/ -name "*compare.py" -delete 
+        cd $REPO/docs/ &&
+        find ./ \( -name "*.aux" -or -name "*.out" -or -name "*.log" -or -name "*.toc" -or -name "*.bbl" -or -name "*.blg" -or -name "*Tests*.tex" \) -delete
+    } || {
+        echo "ERROR: Could not remove files."
+        exit 1
+    }
+    echo "Files removed."
+}
+else {
+    echo
+    echo "Files not deleted."
+    exit 1
+}
+fi

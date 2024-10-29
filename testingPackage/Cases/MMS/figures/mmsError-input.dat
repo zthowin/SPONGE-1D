@@ -1,0 +1,76 @@
+Project directory = testing
+
+Output directory = /testingPackage/Cases/MMS/figures/
+
+Name = uufpf_t_L2.pdf
+
+Animations = DELETE : False ; Framerate : 10
+
+Scaling = TIME : 1 ; DISPLACEMENT : 1e3 ; STRESS/STRAIN : 1e3
+
+Plot x-ticks = ENABLED : False ; POSITIONS : 1e0,1e-1,1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8 ; LABELS : $10^0$,$10^{-1}$,$10^{-2}$,$10^{-3}$,$10^{-4}$,$10^{-5}$,$10^{-6}$,$10^{-7}$,$10^{-8}$ ; SECONDARY : False
+
+Plot y-ticks = ENABLED : False ; POSITIONS : 1e0,1e-1,1e-2,1e-3,1e-4,1e-5,1e-6,1e-7,1e-8,1e-9,1e-10,1e-11,1e-12,1e-13,1e-14 ; LABELS : $10^0$,$10^{-1}$,$10^{-2}$,$10^{-3}$,$10^{-4}$,$10^{-5}$,$10^{-6}$,$10^{-7}$,$10^{-8}$,$10^{-9}$,$10^{-10}$,$10^{-11}$,$10^{-12}$,$10^{-13}$,$10^{-14}$ ; SECONDARY : True
+
+Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 0.5 ; Y : 0.909 ; POSITION : center
+#Plot legend = ENABLED : True ; HANDLE_LENGTH : 1.0 ; X : 1.2 ; Y : 1.02 ; POSITION : upper left
+
+Plot grid = ENABLED : True ; WHICH : both
+
+Plot limits = XLIM_0 : 1e-1 ; XLIM_1 : 1e-7 ; YLIM_0 : 1e-15 ; YLIM_1 : 1e-1
+
+Plot title = ENABLED : True ; LOCATION : 1.0 ; TITLE : Temporal convergence of Q2-Q2-P1 elements ($t \in [0, 10^{-2}]$ s)
+
+Plot DPI = 300
+
+Plot font sizes = TITLE : 16 ; X-AXIS : 16 ; Y-AXIS : 16 ; LEGEND : 10
+
+Simulation A directory = /testingPackage/Cases/MMS/uufpf/
+
+Simulation B directory = None
+
+Simulation C directory = None
+
+Simulation D directory = None
+
+Simulation E directory = None
+
+Simulation A Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation B Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation C Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation D Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation E Skip = 1 ; 1 ; 1 ; 1 ; 1
+
+Simulation A title = None
+
+Simulation B title = None
+
+Simulation C title = None
+
+Simulation D title = None
+
+Simulation E title = None
+
+Simulation A probes = Height 1 (m) : None ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation B probes = Height 1 (m) : None ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation C probes = Height 1 (m) : None ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation D probes = Height 1 (m) : None ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation E probes = Height 1 (m) : None ; Height 2 (m) : None ; Height 3 (m) : None ; Height 4 (m) : None
+
+Simulation A lines = Type_1 : -x ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 :  red ; Color_3 : magenta ; Color_4 : blue ; Color_5 : green ; Fillstyle : none
+
+Simulation B lines = Type_1 : -o ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 :  red ; Color_3 : magenta ; Color_4 : blue ; Color_5 : green ; Fillstyle : none
+
+Simulation C lines = Type_1 : -^ ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 :  red ; Color_3 : magenta ; Color_4 : blue ; Color_5 : green ; Fillstyle : none
+
+Simulation D lines = Type_1 : -v ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 :  red ; Color_3 : magenta ; Color_4 : blue ; Color_5 : green ; Fillstyle : none
+
+Simulation E lines = Type_1 : -+ ; Type_2 : - ; Type_3 : - ; Type_4 : - ; Type_5 : - ; Color_1 : black ; Color_2 :  red ; Color_3 : magenta ; Color_4 : blue ; Color_5 : green ; Fillstyle : none
