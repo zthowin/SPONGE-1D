@@ -1,7 +1,5 @@
 # SPONGE-1D
 
-[[_TOC_]]
-
 ## Introduction
 
 SPONGE-1D is a serial finite element simulation code that uses the Theory of Porous Media (TPM) to model multiphase (and single-phase) materials in a one-dimensional (1-D) uniaxial strain, unidirectional pore fluid flow environment. Its specialty is in accomodating a range of physical models (formulations) to describe the material response to high strain-rate loadings, e.g., from shock waves. Features include:
