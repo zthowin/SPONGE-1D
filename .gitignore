@@ -11,9 +11,8 @@
 */results/*
 *.txt
 *.swp
-*/input_files/*
 output/*
-scripts/*.dat
+scripts/inputs/*
 *.npy
 !input-template-no-comments.dat
 !input-template-with-comments.dat
