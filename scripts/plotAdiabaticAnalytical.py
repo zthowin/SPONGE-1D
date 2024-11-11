@@ -36,7 +36,7 @@ def main(a_TimeDict, params):
   #---------------------
   simA_ts_fname   = params.simA_Dir + 'ts.npy'
   simA_J_fname    = params.simA_Dir + 'J.npy'
- simA_time_fname = params.simA_Dir + 'time.npy'
+  simA_time_fname = params.simA_Dir + 'time.npy'
   if not os.path.isfile(simA_ts_fname) and not os.path.isfile(simA_J_fname):
     sys.exit("-------\nERROR:\n-------\nTemperature and Jacobian data not found for Simulation A.")
 

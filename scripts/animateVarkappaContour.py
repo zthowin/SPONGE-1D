@@ -161,8 +161,8 @@ def main(a_TimeDict, a_DispDict, params):
   else:
     if params.simA_isPython:
      simA_khat        = simA_khat.reshape(simA_khat.shape[0],int(simA_khat.shape[1]*simA_khat.shape[2]))
-      simA_J           = simA_J.reshape(simA_J.shape[0],int(simA_J.shape[1]*simA_J.shape[2]))
-      simA_coordsGauss = simA_coordsGauss.flatten()
+     simA_J           = simA_J.reshape(simA_J.shape[0],int(simA_J.shape[1]*simA_J.shape[2]))
+     simA_coordsGauss = simA_coordsGauss.flatten()
     if params.simB_Dir is not None and params.simB_isPython:
       simB_khat        = simB_khat.reshape(simB_khat.shape[0],int(simB_khat.shape[1]*simB_khat.shape[2]))
       simB_J           = simB_J.reshape(simB_J.shape[0],int(simB_J.shape[1]*simB_J.shape[2]))
@@ -172,13 +172,13 @@ def main(a_TimeDict, a_DispDict, params):
       simC_J           = simC_J.reshape(simC_J.shape[0],int(simC_J.shape[1]*simC_J.shape[2]))
       simC_coordsGauss = simC_coordsGauss.flatten()
     if params.simD_Dir is not None and params.simD_isPython:
-s      simD_khat        = simD_khat.reshape(simD_khat.shape[0],int(simD_khat.shape[1]*simD_khat.shape[2]))
+      simD_khat        = simD_khat.reshape(simD_khat.shape[0],int(simD_khat.shape[1]*simD_khat.shape[2]))
       simD_J           = simD_J.reshape(simD_J.shape[0],int(simD_J.shape[1]*simD_J.shape[2]))
       simD_coordsGauss = simD_coordsGauss.flatten()
- s   if params.simE_Dir is not None and params.simE_isPython:
+    if params.simE_Dir is not None and params.simE_isPython:
       simE_khat        = simE_khat.reshape(simE_khat.shape[0],int(simE_khat.shape[1]*simE_khat.shape[2]))
       simE_J           = simE_J.reshape(simE_J.shape[0],int(simE_J.shape[1]*simE_J.shape[2]))
-  s    simE_coordsGauss = simE_coordsGauss.flatten()
+      simE_coordsGauss = simE_coordsGauss.flatten()
   #------------------------------------------------------------------------------
   # Check that every simulation has at least as many data points as Simulation A.
   #s------------------------------------------------------------------------------
