@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edit:    October 1, 2024
+# Last Edit:    November 27, 2024
 #----------------------------------------------------------------------------------------
 import sys
 
@@ -127,8 +127,8 @@ def compute_G_variables(self, Parameters):
     self.get_ts()
   if 'uf' in Parameters.Physics:
     self.get_a_f()
-#    self.get_dvfdX()
-#    self.get_Qf(Parameters)
+    self.get_dvfdX()
+    self.get_Qf(Parameters)
     self.get_rhof_0()
     if 't' not in Parameters.Physics:
       self.get_rhos_0(Parameters)
@@ -176,12 +176,12 @@ def compute_H_variables(self, Parameters):
       self.get_dp_fDDotdX()
   if 'uf' in Parameters.Physics:
     self.get_a_f()
-#    self.get_dvfdX()
-#    self.get_d2vfdX2()
-#    self.get_Qf(Parameters)
-#    self.get_drhofRdX(Parameters)
-#    self.get_d2udX2()
-#    self.get_DIV_Qf(Parameters)
+    self.get_dvfdX()
+    self.get_d2vfdX2()
+    self.get_Qf(Parameters)
+    self.get_drhofRdX(Parameters)
+    self.get_d2udX2()
+    self.get_DIV_Qf(Parameters)
     if Parameters.DarcyBrinkman:
       self.get_dvfdX()
       self.get_DIV_FES(Parameters)
@@ -211,9 +211,9 @@ def compute_I_variables(self, Parameters):
     self.get_dvfdX()
     self.get_FES(Parameters)
     self.get_DIV_FES(Parameters)
-#  self.get_d2udX2()
-#  self.get_dvfdX()
-#  self.get_d2vfdX2()
+  self.get_d2udX2()
+  self.get_dvfdX()
+  self.get_d2vfdX2()
   if 'tf' in Parameters.Physics:
     if not Parameters.DarcyBrinkman:
       self.get_F11()
@@ -224,9 +224,9 @@ def compute_I_variables(self, Parameters):
   self.get_rhofR(Parameters)
   self.get_rhof_0()
   self.get_khat(Parameters)
-#  self.get_drhofRdX(Parameters)
-#  self.get_Qf(Parameters)
-#  self.get_DIV_Qf(Parameters)
+  self.get_drhofRdX(Parameters)
+  self.get_Qf(Parameters)
+  self.get_DIV_Qf(Parameters)
   return
 
 @register_method
@@ -454,14 +454,14 @@ def get_DIV_FES(self, Parameters):
   self.DIV_FES = (self.dnfdX*self.dvfdX + self.nf*self.d2vfdX2)*(Parameters.fluidBulkVisc + 2*Parameters.fluidShearVisc)/(self.F11)
   return
 
-#@register_method
-#def get_DIV_Qf(self, Parameters):
-#   Compute the gradient of the pore fluid shock viscosity.
-#  T1          = (self.Qf/(self.nf*self.rhofR))*(self.rhofR*self.d2udX2/self.F11 + self.nf*self.drhofRdX)
-#  T2          = 1.5*Parameters.H0e*self.dvfdX*(self.dvfdX*self.d2udX2/self.F11 + 2*self.d2vfdX2)
-#  T3          = .06*Parameters.cf*self.d2vfdX2
-#  self.DIV_Qf = T1 + (self.nf*self.rhofR*Parameters.H0e)*(T2 + T3)
-#  return
+@register_method
+def get_DIV_Qf(self, Parameters):
+  # Compute the gradient of the pore fluid shock viscosity.
+  T1          = (self.Qf/(self.nf*self.rhofR))*(self.rhofR*self.d2udX2/self.J + self.nf*self.drhofRdX)
+  T2          = 1.5*Parameters.H0e*self.dvfdX*(self.dvfdX*self.d2udX2/self.J + 2*self.d2vfdX2)
+  T3          = .06*Parameters.cf*self.d2vfdX2
+  self.DIV_Qf = T1 + (self.nf*self.rhofR*Parameters.H0e)*(T2 + T3)
+  return
 
 @register_method
 def get_vDarcy(self, Parameters):
@@ -534,24 +534,24 @@ def get_Q(self, Parameters):
   return
 
 
-#@register_method
-#def get_Qf(self, Parameters):
-#  # Compute the shock viscosity applied to the pore fluid.
-#  try:
-#    if np.any(self.dvfdX < 0):
-#      self.Qf       = np.zeros(self.Gauss_Order)
-#      self.Qfidxs   = np.where(self.dvfdX < 0)
-#      self.Qf[idxs] = (self.nf*self.rhofR*Parameters.H0e*self.dvfdX*\
-#                       (1.5*Parameters.H0e*self.dvfdX - .06*Parameters.cf))[idxs]
-#    else:
-#      self.Qf = 0
-#    
-#  except FloatingPointError:
-#    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
-#    print("Deformation < 0 in bulk viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
-#    raise FloatingPointError
-#  self.Qf = 0
-#  return
+@register_method
+def get_Qf(self, Parameters):
+  # Compute the shock viscosity applied to the pore fluid.
+  try:
+    if np.any(self.dvfdX < 0):
+      self.Qf              = np.zeros(self.Gauss_Order)
+      self.Qfidxs          = np.where(self.dvfdX < 0)
+      self.Qf[self.Qfidxs] = (self.nf*self.rhofR*Parameters.H0e*self.dvfdX*\
+                             (1.5*Parameters.H0e*self.dvfdX - .06*Parameters.cf))[self.Qfidxs]
+    else:
+      self.Qf = 0
+    
+  except FloatingPointError:
+    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+    print("Deformation < 0 in bulk viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+    raise FloatingPointError
+  self.Qf = 0
+  return
 
 @register_method
 def get_P11(self, Parameters):
@@ -776,22 +776,22 @@ def get_rhofR(self, Parameters):
     raise FloatingPointError
   return
 
-#@register_method
-#def get_drhofRdX(self, Parameters):
-#  # Compute the gradient of the real mass density of the pore fluid.
-#  try: 
-#    if Parameters.fluidModel == 'Exponential':
-#      self.drhofRdX = (self.rhofR/Parameters.KF)*self.dp_fdX
-#    elif Parameters.fluidModel == 'Ideal-Gas':
-#      self.drhofRdX = 1/(Parameters.RGas*self.tf)*self.dp_fdX - (self.rhofR/self.tf)*self.dtfdX
-#    else:
-#      sys.exit("-----------------\nINPUT FILE ERROR:\n-----------------\nConstitutive form for pore fluid real mass density not applicable for computing its gradient.")
-#  except FloatingPointError:
-#    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
-#    print("Pore fluid pressure =", self.p_f)
-#    print("Pressure instability in real mass density gradient; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
-#    raise FloatingPointError
-#  return
+@register_method
+def get_drhofRdX(self, Parameters):
+  # Compute the gradient of the real mass density of the pore fluid.
+  try: 
+    if Parameters.fluidModel == 'Exponential':
+      self.drhofRdX = (self.rhofR/Parameters.KF)*self.dp_fdX
+    elif Parameters.fluidModel == 'Ideal-Gas':
+      self.drhofRdX = 1/(Parameters.RGas*self.tf)*self.dp_fdX - (self.rhofR/self.tf)*self.dtfdX
+    else:
+      sys.exit("-----------------\nINPUT FILE ERROR:\n-----------------\nConstitutive form for pore fluid real mass density not applicable for computing its gradient.")
+  except FloatingPointError:
+    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+    print("Pore fluid pressure =", self.p_f)
+    print("Pressure instability in real mass density gradient; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+    raise FloatingPointError
+  return
 
 @register_method
 def get_rhosR(self, Parameters):

@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edit:    October 25, 2024
+# Last Edit:    November 27, 2024
 #----------------------------------------------------------------------------------------
 import sys
 
@@ -72,8 +72,8 @@ def get_G_Forces(self, Parameters):
       if Parameters.DarcyBrinkman:
         self.get_G5(Parameters)
         self.G_int += self.G_5
-#      self.get_G6(Parameters) # Pore fluid shock viscosity
-#     self.G_int += self.G_6
+      self.get_G6(Parameters) # Pore fluid shock viscosity
+      self.G_int += self.G_6
     if Parameters.MMS:
       self.get_GMMS(Parameters)
       self.G_int += self.G_MMS
@@ -126,6 +126,9 @@ def get_H_Forces(self, Parameters):
     if Parameters.MMS:
       self.get_HMMS(Parameters)
       self.H_int += self.H_MMS
+    if 'uf' in Parameters.Physics:
+      self.get_H8(Parameters)
+      self.H_int += self.H_8
   except FloatingPointError:
     print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
     print("Pore fluid pressure =", self.p_f)
@@ -646,6 +649,20 @@ def get_H7(self, Parameters):
   return
 
 @register_method
+def get_H8(self, Parameters):
+  # Compute H_8^INT (pore fluid shock viscosity contribution to H).
+  try:
+    self.H_8 = np.einsum('ik, k', self.Bp, self.khat*self.DIV_Qf*self.weights/self.nf)
+  except FloatingPointError:
+    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+    print("Pore fluid shock viscosity = ", self.DIV_Qf)
+    print("Shock viscosity instability in H_8; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+    raise FloatingPointError
+
+  self.H_8 *= Parameters.Area*self.Jacobian
+  return
+
+@register_method
 def get_HStab(self, Parameters):
   # Compute H_Stab (stabilization contribution to H).
   try:
@@ -1049,13 +1066,12 @@ def get_I6(self, Parameters):
   self.I_6 *= Parameters.Area*self.Jacobian
   return
 
-#@register_method
-#def get_I7(self, Parameters):
-#  # Compute I_7 (shock viscosity gradient contribution to I).
-#  self.I_7  = np.einsum('ik, k', self.Nuf, self.DIV_Qf*self.weights)
-#  self.I_7 *= Parameters.Area*self.Jacobian
-#  self.I_7 = 0
-#  return
+@register_method
+def get_I7(self, Parameters):
+  # Compute I_7 (shock viscosity gradient contribution to I).
+  self.I_7  = np.einsum('ik, k', self.Nuf, self.DIV_Qf*self.weights)
+  self.I_7 *= Parameters.Area*self.Jacobian
+  return
 
 @register_method
 def get_IMMS(self, Parameters):
