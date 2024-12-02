@@ -291,6 +291,7 @@ def compute_K_variables(self, Parameters):
     self.get_v_f()
     self.get_v_s()
     self.get_dvfdX()
+    self.get_Qf(Parameters)
   else:
     self.get_p_fDot()
     self.get_JDot()
@@ -469,7 +470,6 @@ def get_vDarcy(self, Parameters):
   try:
     self.vDarcy = -self.khat*(self.dp_fdX/self.F11)
     if 'uf' in Parameters.Physics:
-      self.DIV_Qf = 0
       self.vDarcy -= self.khat*(self.rhofR*(self.a_f - Parameters.Gravity) + self.DIV_Qf)
       if Parameters.DarcyBrinkman:
         self.vDarcy += self.khat*(self.DIV_FES/(self.nf*self.F11))
