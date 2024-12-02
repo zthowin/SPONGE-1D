@@ -147,11 +147,10 @@ def get_I_Forces(self, Parameters):
   self.get_I2(Parameters)
   self.get_I3(Parameters)
   self.get_I4(Parameters)
-#  self.get_I7(Parameters) # Pore fluid shock viscosity
+  self.get_I7(Parameters) # Pore fluid shock viscosity
 
   try:
-    self.I_int = self.I_1 + self.I_2 + self.I_3 + self.I_4
-    # + self.I_7
+    self.I_int = self.I_1 + self.I_2 + self.I_3 + self.I_4 + self.I_7
     if Parameters.DarcyBrinkman:
       self.get_I5(Parameters)
       self.I_int += self.I_5
@@ -216,9 +215,12 @@ def get_K_Forces(self, Parameters):
 
   try:
     self.K_int = self.K_2 + self.K_3 + self.K_4 + self.K_7 + self.K_8
-    if 'uf' in Parameters.Physics and Parameters.fluidModel == 'Exponential-Thermal':
-      self.get_K5(Parameters)
-      self.K_int += self.K_5
+    if 'uf' in Parameters.Physics:
+      if Parameters.fluidModel == 'Exponential-Thermal':
+        self.get_K5(Parameters)
+        self.K_int += self.K_5
+      self.get_K9(Parameters)
+      self.K_int += self.K_9
     if 'uf' not in Parameters.Physics:
       self.get_K5(Parameters)
       self.get_K6(Parameters)
@@ -1392,6 +1394,13 @@ def get_K8(self, Parameters):
   # Compute K_8^INT (thermal convective coupling contribution to K).
   self.K_8  = -np.einsum('ik, k', self.Ntf, self.J*Parameters.k_exchange*(self.ts - self.tf)*self.weights)
   self.K_8 *= Parameters.Area*self.Jacobian
+  return
+
+@register_method
+def get_K9(self, Parameters):
+  # Compute K_9^INT (pore fluid shock viscosity contribution to K).
+  self.K_9  = np.einsum('ik, k', self.Ntf, self.Qf*self.dvfdX*self.weights)
+  self.K_9 *= Parameters.Area*self.Jacobian
   return
 
 @register_method
