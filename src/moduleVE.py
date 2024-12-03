@@ -3,7 +3,7 @@
 #
 # Author:       Richard Regueiro, Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edits:   October 16, 2024
+# Last Edits:   December 3, 2024
 #--------------------------------------------------------------------------------------
 import sys
 
@@ -105,6 +105,9 @@ def get_SSISV(LM, g, D, V, A, Parameters):
       element.get_nf()
       element.get_rhofR(Parameters)
       element.get_khat(Parameters)
+      if 'uf' in Parameters.Physics:
+        element.get_Qf(Parameters)
+        element.get_DIV_Qf(Parameters)
       if 'tf' in Parameters.Physics:
         element.get_dnfdX()
         element.get_tf()
