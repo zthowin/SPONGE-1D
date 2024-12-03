@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edit:    November 27, 2024
+# Last Edit:    December 3, 2024
 #----------------------------------------------------------------------------------------
 import sys
 
@@ -458,20 +458,24 @@ def get_DIV_FES(self, Parameters):
 @register_method
 def get_DIV_Qf(self, Parameters):
   # Compute the gradient of the pore fluid shock viscosity.
-  if np.any(self.dvfdX) < 0:
-    if Parameters.fluidModel == 'Exponential':
-      T1 = self.d2udX2/(self.nf*self.J) + self.dp_fdX/Parameters.KF
-      T2 = 2*Parameters.C0*self.dvfdX/self.J - Parameters.C1*Parameters.cf
-
-      self.DIV_Qf = np.zeros(self.Gauss_Order)
-
-      self.DIV_Qf[self.Qfidxs] = (self.Qf*T1 + self.nf*self.rhofR*self.d2vfdX2*Parameters.H0e*T2)[self.Qfidxs]
-    else:
-      warnings.simplefilter('once', RuntimeWarning("WARNING. Pore fluid shock viscosity not implemented for constitutive model of choice, automatically disabling."))
-      self.DIV_Qf = 0
-      self.Qf     = 0
-  else:
+  if 'RK' not in Parameters.integrationScheme:
+    # Not formulated for implicit schemes
     self.DIV_Qf = 0
+  else:
+    try:
+      if np.any(self.dvfdX) < 0:
+        T1 = self.d2udX2/(self.nf*self.J) + self.drhofRdX/self.rhofR
+        T2 = 2*Parameters.C0*self.dvfdX/self.J - Parameters.C1*Parameters.cf
+
+        self.DIV_Qf = np.zeros(self.Gauss_Order)
+
+        self.DIV_Qf[self.Qfidxs] = (self.Qf*T1 + self.nf*self.rhofR*self.d2vfdX2*Parameters.H0e*T2)[self.Qfidxs]
+      else:
+        self.DIV_Qf = 0
+    except FloatingPointError:
+      print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+      print("Error in pore fluid shock viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+      raise FloatingPointError
   return
 
 @register_method
@@ -539,7 +543,7 @@ def get_Q(self, Parameters):
     
   except FloatingPointError:
     print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
-    print("Deformation < 0 in bulk viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+    print("Deformation < 0 in shock viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
     raise FloatingPointError
   return
 
@@ -547,21 +551,24 @@ def get_Q(self, Parameters):
 @register_method
 def get_Qf(self, Parameters):
   # Compute the shock viscosity applied to the pore fluid.
-  try:
-    if np.any(self.dvfdX < 0):
-      self.Qf              = np.zeros(self.Gauss_Order)
-      self.Qfidxs          = np.where(self.dvfdX < 0)
-      self.Qf[self.Qfidxs] = (self.nf*self.rhofR*Parameters.H0e*self.dvfdX*\
-                             (Parameters.C0*Parameters.H0e*self.dvfdX/self.J\
-                              - Parameters.C1*Parameters.cf))[self.Qfidxs]
-    else:
-      self.Qf = 0
-    
-  except FloatingPointError:
-    print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
-    print("Deformation < 0 in bulk viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
-    raise FloatingPointError
-  self.Qf = 0
+  if 'RK' not in Parameters.integrationScheme:
+    # Not formulated for implicit schemes
+    self.Qf = 0
+  else:
+    try:
+      if np.any(self.dvfdX < 0):
+        self.Qf              = np.zeros(self.Gauss_Order)
+        self.Qfidxs          = np.where(self.dvfdX < 0)
+        self.Qf[self.Qfidxs] = (self.nf*self.rhofR*Parameters.H0e*self.dvfdX*\
+                               (Parameters.C0*Parameters.H0e*self.dvfdX/self.J\
+                                - Parameters.C1*Parameters.cf))[self.Qfidxs]
+      else:
+        self.Qf = 0
+      
+    except FloatingPointError:
+      print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+      print("Deformation < 0 in pore fluid shock viscosity response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.tk, Parameters.dt))
+      raise FloatingPointError
   return
 
 @register_method
@@ -793,6 +800,8 @@ def get_drhofRdX(self, Parameters):
   try: 
     if Parameters.fluidModel == 'Exponential':
       self.drhofRdX = (self.rhofR/Parameters.KF)*self.dp_fdX
+    elif Parameters.fluidModel == 'Isentropic':
+      self.drhofRdX = (self.rhofR/(1.4*self.p_f))*self.dp_fdX
     elif Parameters.fluidModel == 'Ideal-Gas':
       self.drhofRdX = 1/(Parameters.RGas*self.tf)*self.dp_fdX - (self.rhofR/self.tf)*self.dtfdX
     else:
