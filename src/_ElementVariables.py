@@ -458,10 +458,20 @@ def get_DIV_FES(self, Parameters):
 @register_method
 def get_DIV_Qf(self, Parameters):
   # Compute the gradient of the pore fluid shock viscosity.
-  T1          = (self.Qf/(self.nf*self.rhofR))*(self.rhofR*self.d2udX2/self.J + self.nf*self.drhofRdX)
-  T2          = 1.5*Parameters.H0e*self.dvfdX*(self.dvfdX*self.d2udX2/self.J + 2*self.d2vfdX2)
-  T3          = .06*Parameters.cf*self.d2vfdX2
-  self.DIV_Qf = T1 + (self.nf*self.rhofR*Parameters.H0e)*(T2 + T3)
+  if np.any(self.dvfdX) < 0:
+    if Parameters.fluidModel == 'Exponential':
+      T1 = self.d2udX2/(self.nf*self.J) + self.dp_fdX/Parameters.KF
+      T2 = 2*Parameters.C0*self.dvfdX/self.J - Parameters.C1*Parameters.cf
+
+      self.DIV_Qf = np.zeros(self.Gauss_Order)
+
+      self.DIV_Qf[self.Qfidxs] = (self.Qf*T1 + self.nf*self.rhofR*self.d2vfdX2*Parameters.H0e*T2)[self.Qfidxs]
+    else:
+      warnings.simplefilter('once', RuntimeWarning("WARNING. Pore fluid shock viscosity not implemented for constitutive model of choice, automatically disabling."))
+      self.DIV_Qf = 0
+      self.Qf     = 0
+  else:
+    self.DIV_Qf = 0
   return
 
 @register_method
@@ -542,7 +552,8 @@ def get_Qf(self, Parameters):
       self.Qf              = np.zeros(self.Gauss_Order)
       self.Qfidxs          = np.where(self.dvfdX < 0)
       self.Qf[self.Qfidxs] = (self.nf*self.rhofR*Parameters.H0e*self.dvfdX*\
-                             (1.5*Parameters.H0e*self.dvfdX - .06*Parameters.cf))[self.Qfidxs]
+                             (Parameters.C0*Parameters.H0e*self.dvfdX/self.J\
+                              - Parameters.C1*Parameters.cf))[self.Qfidxs]
     else:
       self.Qf = 0
     
