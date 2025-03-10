@@ -229,7 +229,7 @@ def main(a_TimeDict, a_DispDict, params):
       simE_FluidSkip  = 1
       if simE_simParams.Element_Type.split('-')[1] == 'Q3H':
         simE_FluidStop  -= 1
-sssssss       simE_FluidSkip  += 1
+        simE_FluidSkip  += 1
 
   print("Data loaded successfully.")
   #----ss--------------------------------------------------------------------------
