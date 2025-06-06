@@ -2,15 +2,17 @@
 #--------------------------------------------------------------------------------------------------
 # This module calls individual solver routines based on the type of finite element analysis
 # requested by the user in the input file. Currently, this module can handle single-phase elasticity
-# or elastodynamics, mutliphase poroelasticity or poroelastodynamics for biphasic mixtures, or
-# multiphase thermoporoelasticity or thermoporoelastodyanmics for biphasic mixtures and,
-# if the user supplies a first order ODE in 'solver_user.py', general-purpose first order ODEs.
+# or elastodynamics or thermoelastodynamics, mutliphase poroelasticity or poroelastodynamics for 
+# biphasic mixtures, or multiphase thermoporoelasticity or thermoporoelastodyanmics for biphasic 
+# mixtures, and, if the user supplies a first order ODE in 'solver_user.py', general-purpose first 
+# order ODEs.
+#
 # This module also converts input parameters into an object that can be called by subroutines.
 # Details on that process is provided in the comments below.
 #
 # Author:       Zachariah Irwin
 # Affiliation:  University of Colorado Boulder
-# Last Edits:   October 16, 2024
+# Last Edits:   June 6, 2025
 #--------------------------------------------------------------------------------------------------
 import sys, os, shutil, glob, argparse
 
@@ -131,9 +133,13 @@ class Parameters:
       self.SolidLumping    = False
       self.FluidLumping    = False
       self.PressureLumping = False
-    #-------------------------------------
+    #-----------------------------------------------
     # Set implicit integration parameters.
-    #-------------------------------------
+    #
+    # gamma, beta  -> Newmark methods
+    # gamma, alpha -> Predictor-corrector (disabled)
+    # gamma        -> One-step methods 
+    #-----------------------------------------------
     self.beta  = inputData.m_beta
     self.gamma = inputData.m_gamma
     self.alpha = inputData.m_alpha
@@ -1004,12 +1010,18 @@ if __name__ == '__main__':
                       help='enable running of test cases')
   parser.add_argument('-r', '--remove', action='store_true',
                       help='remove old data from save directory')
-  parser.add_argument('-d', '--debug', action='store_true',
-                       help='run in debug mode')
-  parser.add_argument('-m', '--isothermal', action='store_true',
+  parser.add_argument('--traceback', action='store_true',
+                       help='run in debug mode (print full tracebacks)')
+  parser.add_argument('--isothermal', action='store_true',
                       help='flag for enabling the isothermal assumption')
-  parser.add_argument('-s', '--staggered', action='store_true',
+  parser.add_argument('--staggered', action='store_true',
                       help='flag for switching order of solution staggering in RK (u-pf-ts-tf) formulation, i.e., solve tfDot before p_fDot')
+  parser.add_argument('--ts_monitor', action='store_true',
+                      help='flag for monitoring time-stepping data')
+  parser.add_argument('--io_monitor', action='store_true',
+                      help='flag for monitoring I/O')
+  parser.add_argument('--snes_monitor', action='store_true',
+                      help='flag for monitoring non-linear iterations')
   args = parser.parse_args()
   #-----------------
   # Read input file.
@@ -1044,20 +1056,15 @@ if __name__ == '__main__':
         os.remove(oldData)
     print("Successfully removed prior data.")
 
-  if args.debug:
-    params.debug = True
-    params.printTraceback = True
-  else:
-    params.debug = False
-    params.printTraceback = False
-  if args.isothermal:
-    params.isothermalAssumption = True
-  else:
-    params.isothermalAssumption = False
-  if args.staggered:
-    params.staggered = True
-  else:
-    params.staggered = False
+  #----------------------------------------
+  # Pass CL arguments to Parameters object.
+  #----------------------------------------
+  params.printTraceback       = args.traceback
+  params.isothermalAssumption = args.isothermal
+  params.staggered            = args.staggered
+  params.ts_monitor           = args.ts_monitor
+  params.io_monitor           = args.io_monitor
+  params.snes_monitor         = args.snes_monitor
   #------------
   # Run solver.
   #------------
