@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edits:   October 16, 2024
+# Last Edits:   June 6, 2025
 #--------------------------------------------------------------------------------------
 import sys, traceback
 
@@ -154,6 +154,8 @@ def integrate_Newmark_beta(LM, F, D, V, A, Parameters):
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------
       # Update BCs at time t_{n+1}.
       #----------------------------
@@ -222,6 +224,8 @@ def integrate_Newmark_beta(LM, F, D, V, A, Parameters):
 
         Rtol  = np.linalg.norm(R, ord=Parameters.norm_ord)/np.linalg.norm(R0, ord=Parameters.norm_ord)
         normR = np.linalg.norm(R, ord=Parameters.norm_ord)
+        if Parameters.snes_monitor:
+          print("    ", k, "SNES Function norm", Rtol)
         #------------------------------
         # Apply adaptive time stepping.
         #------------------------------
@@ -261,7 +265,8 @@ def integrate_Newmark_beta(LM, F, D, V, A, Parameters):
           save_flag = True
 
       if save_flag:
-        print("Solution stored at t = {:.3e}s".format(Parameters.t))
+        if Parameters.io_monitor:
+          print("Solution stored at t = {:.3e}s".format(Parameters.t))
         #----------------------------------
         # Compute stress/strain at t_{n+1}.
         #----------------------------------
@@ -435,6 +440,8 @@ def integrate_Trapezoidal(LM, F, D, V, Parameters):
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #--------------------------------
       # Update the BCs at time t_{n+1}.
       #--------------------------------
@@ -486,6 +493,8 @@ def integrate_Trapezoidal(LM, F, D, V, Parameters):
 
         Rtol  = np.linalg.norm(R, ord=Parameters.norm_ord)/np.linalg.norm(R0, ord=Parameters.norm_ord)
         normR = np.linalg.norm(R, ord=Parameters.norm_ord)
+        if Parameters.snes_monitor:
+          print("    ", k, "SNES Function norm", Rtol)
         #------------------------------
         # Apply adaptive time stepping.
         #------------------------------
@@ -524,7 +533,8 @@ def integrate_Trapezoidal(LM, F, D, V, Parameters):
           save_flag = True
 
       if save_flag:
-        print("Solution stored at t = {:.3e}s".format(Parameters.t))
+        if Parameters.io_monitor:
+          print("Solution stored at t = {:.3e}s".format(Parameters.t))
         #----------------------------------
         # Compute stress/strain at t_{n+1}.
         #----------------------------------
@@ -664,6 +674,8 @@ def integrate_QS(LM, GEXT, D, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #--------------------------------
       # Update the BCs at time t_{n+1}.
       #--------------------------------
@@ -699,6 +711,8 @@ def integrate_QS(LM, GEXT, D, Parameters):
 
         Rtol  = np.linalg.norm(R, ord=Parameters.norm_ord)/np.linalg.norm(R0, ord=Parameters.norm_ord)
         normR = np.linalg.norm(R, ord=Parameters.norm_ord)
+        if Parameters.snes_monitor:
+          print("    ", k, "SNES Function norm", Rtol)
         #------------------
         # Check iterations.
         #------------------
@@ -712,7 +726,8 @@ def integrate_QS(LM, GEXT, D, Parameters):
         save_flag = True
 
       if save_flag:
-        print("Solution stored at t = {:.3e}s".format(Parameters.t))
+        if Parameters.io_monitor:
+          print("Solution stored at t = {:.3e}s".format(Parameters.t))
         #----------------------------------
         # Compute stress/strain at t_{n+1}.
         #----------------------------------

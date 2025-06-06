@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edits:   October 16, 2024
+# Last Edits:   June 6, 2025
 #--------------------------------------------------------------------------------------
 import sys, traceback
 
@@ -143,10 +143,13 @@ def integrate_u_FO(LM, GEXT, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           #------------------------------
@@ -212,6 +215,9 @@ def integrate_u_FO(LM, GEXT, D, V, A, Parameters):
             computeStages  = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -254,7 +260,8 @@ def integrate_u_FO(LM, GEXT, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------
@@ -442,10 +449,13 @@ def integrate_ut_FO(LM, F, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           #------------------------------
@@ -531,6 +541,9 @@ def integrate_ut_FO(LM, F, D, V, A, Parameters):
             computeStages                = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -582,7 +595,8 @@ def integrate_ut_FO(LM, F, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------
@@ -772,10 +786,13 @@ def integrate_upf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           #------------------------------
@@ -865,6 +882,9 @@ def integrate_upf_FO(LM, F, D, V, A, Parameters):
             computeStages  = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -916,7 +936,8 @@ def integrate_upf_FO(LM, F, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------
@@ -1112,10 +1133,13 @@ def integrate_uufpf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           #------------------------------
@@ -1223,6 +1247,9 @@ def integrate_uufpf_FO(LM, F, D, V, A, Parameters):
             computeStages                = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -1279,7 +1306,8 @@ def integrate_uufpf_FO(LM, F, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------
@@ -1482,10 +1510,13 @@ def integrate_upftstf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           #------------------------------
@@ -1661,6 +1692,9 @@ def integrate_upftstf_FO(LM, F, D, V, A, Parameters):
             computeStages                = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -1753,7 +1787,8 @@ def integrate_upftstf_FO(LM, F, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------
@@ -1962,10 +1997,13 @@ def integrate_uufpftstf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       Parameters.t += Parameters.dt
       n            += 1
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
       computeStages = True
+      computeStageN = 0
       while computeStages:
         for i in range(Parameters.numRKStages):
           Parameters.tk = Parameters.t + Parameters.dt*(Parameters.Ci[i] - 1)
@@ -2157,6 +2195,9 @@ def integrate_uufpftstf_FO(LM, F, D, V, A, Parameters):
             computeStages                = False
           else:
             acceptSolution = False
+            computeStageN += 1
+            if Parameters.snes_monitor:
+              print("    ", computeStageN, "SNES Function norm", error)
         else:
           try:
             #---------------------------------
@@ -2254,7 +2295,8 @@ def integrate_uufpftstf_FO(LM, F, D, V, A, Parameters):
         # Save data at this time increment.
         #----------------------------------
         if save_flag:
-          print("Solution stored at t = {:.3e}s".format(Parameters.t))
+          if Parameters.io_monitor:
+            print("Solution stored at t = {:.3e}s".format(Parameters.t))
           #----------------------------------
           # Compute stress/strain at t_{n+1}.
           #----------------------------------

@@ -3,7 +3,7 @@
 #
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado Boulder
-# Last Edits:   October 16, 2024
+# Last Edits:   June 6, 2025
 #--------------------------------------------------------------------------------------
 import sys, traceback
 
@@ -138,6 +138,8 @@ def integrate_u(LM, GEXT, D, V, A, Parameters):
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------
       # Update BCs at time t_{n+1}.
       #----------------------------
@@ -168,7 +170,8 @@ def integrate_u(LM, GEXT, D, V, A, Parameters):
           save_flag = True
 
       if save_flag:
-        print("Solution stored at t = {:.3e}s".format(Parameters.t))
+        if Parameters.io_monitor:
+          print("Solution stored at t = {:.3e}s".format(Parameters.t))
         #----------------------------------
         # Compute stress/strain at t_{n+1}.
         #----------------------------------
@@ -334,6 +337,8 @@ def integrate_upf(LM, F, D, V, A, Parameters):
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------
       # Update BCs at time t_{n+1}.
       #----------------------------
@@ -371,7 +376,8 @@ def integrate_upf(LM, F, D, V, A, Parameters):
           save_flag = True
 
       if save_flag:
-        print("Solution stored at t = {:.3e}s".format(Parameters.t))
+        if Parameters.io_monitor:
+          print("Solution stored at t = {:.3e}s".format(Parameters.t))
         #----------------------------------
         # Compute stress/strain at t_{n+1}.
         #----------------------------------
@@ -428,7 +434,7 @@ def update_dotx(A_np1, A_n, Parameters):
     return (0.5*Parameters.dt*(A_np1 + A_n))
   except FloatingPointError:
     print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
-    print("Underflow/overflow, could not update /\dot{x}.")
+    print("Underflow/overflow, could not update \\dot{x}.")
     raise FloatingPointError
 #-----------------------------------------------------
 # Helper function to integrate second time derivative.
