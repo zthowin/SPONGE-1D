@@ -310,6 +310,8 @@ def initDirichletBCs(a_LM, Parameters):
       a_LM = initFluidVelocityBC(a_LM, Parameters)
     else:
       Parameters.LagrangeApply = False
+  else:
+    Parameters.LagrangeApply = False
   #---------------------------------------------
   # Modify DOF for pressure boundary conditions.
   #---------------------------------------------
