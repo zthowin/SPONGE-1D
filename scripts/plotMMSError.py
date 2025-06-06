@@ -56,7 +56,7 @@ def main(params, a_DispDict, a_StressDict):
     AF_err  = []
 
     for i in range(start,len(t_plot) + start):
-      dataDir = params.simA_Dir + 'L' + str(i) + params.mms_suffix
+      dataDir = params.simA_Dir + 'L' + str(i) + '-' + params.mms_suffix + '/'
       
       preSimData = readPreSimData(params, sim_Dir=dataDir, sim_InputFileName=dataFN)
       simParams  = preSimData[0]
@@ -207,7 +207,7 @@ def main(params, a_DispDict, a_StressDict):
 
       nel = nel_list[i-1]
 
-      dataDir = params.simA_Dir + 'L' + str(i) + params.mms_suffix
+      dataDir = params.simA_Dir + 'L' + str(i) + '-' + params.mms_suffix + '/'
       dataFN  = 'summit-input-MMS-C-S.dat'
 
       preSimData = readPreSimData(params, sim_Dir=dataDir, sim_InputFileName=dataFN)
