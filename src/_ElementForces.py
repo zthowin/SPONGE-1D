@@ -72,8 +72,8 @@ def get_G_Forces(self, Parameters):
       if Parameters.DarcyBrinkman:
         self.get_G5(Parameters)
         self.G_int += self.G_5
-      self.get_G6(Parameters) # Pore fluid shock viscosity
-      self.G_int += self.G_6
+#      self.get_G6(Parameters) # Pore fluid shock viscosity
+#      self.G_int += self.G_6
     if Parameters.MMS:
       self.get_GMMS(Parameters)
       self.G_int += self.G_MMS
@@ -126,9 +126,9 @@ def get_H_Forces(self, Parameters):
     if Parameters.MMS:
       self.get_HMMS(Parameters)
       self.H_int += self.H_MMS
-    if 'uf' in Parameters.Physics:
-      self.get_H8(Parameters)
-      self.H_int += self.H_8
+#    if 'uf' in Parameters.Physics:
+#      self.get_H8(Parameters)
+#      self.H_int += self.H_8
   except FloatingPointError:
     print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
     print("Pore fluid pressure =", self.p_f)
@@ -147,10 +147,11 @@ def get_I_Forces(self, Parameters):
   self.get_I2(Parameters)
   self.get_I3(Parameters)
   self.get_I4(Parameters)
-  self.get_I7(Parameters) # Pore fluid shock viscosity
+#  self.get_I7(Parameters) # Pore fluid shock viscosity
 
   try:
-    self.I_int = self.I_1 + self.I_2 + self.I_3 + self.I_4 + self.I_7
+#    self.I_int = self.I_1 + self.I_2 + self.I_3 + self.I_4 + self.I_7
+    self.I_int = self.I_1 + self.I_2 + self.I_3 + self.I_4
     if Parameters.DarcyBrinkman:
       self.get_I5(Parameters)
       self.I_int += self.I_5

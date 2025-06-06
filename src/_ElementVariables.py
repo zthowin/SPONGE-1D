@@ -127,8 +127,8 @@ def compute_G_variables(self, Parameters):
     self.get_ts()
   if 'uf' in Parameters.Physics:
     self.get_a_f()
-    self.get_dvfdX()
-    self.get_Qf(Parameters)
+#    self.get_dvfdX()
+#    self.get_Qf(Parameters)
     self.get_rhof_0()
     if 't' not in Parameters.Physics:
       self.get_rhos_0(Parameters)
@@ -176,12 +176,12 @@ def compute_H_variables(self, Parameters):
       self.get_dp_fDDotdX()
   if 'uf' in Parameters.Physics:
     self.get_a_f()
-    self.get_dvfdX()
-    self.get_d2vfdX2()
-    self.get_Qf(Parameters)
-    self.get_drhofRdX(Parameters)
-    self.get_d2udX2()
-    self.get_DIV_Qf(Parameters)
+#    self.get_dvfdX()
+#    self.get_d2vfdX2()
+#    self.get_Qf(Parameters)
+#    self.get_drhofRdX(Parameters)
+#    self.get_d2udX2()
+#    self.get_DIV_Qf(Parameters)
     if Parameters.DarcyBrinkman:
       self.get_dvfdX()
       self.get_DIV_FES(Parameters)
@@ -211,9 +211,9 @@ def compute_I_variables(self, Parameters):
     self.get_dvfdX()
     self.get_FES(Parameters)
     self.get_DIV_FES(Parameters)
-  self.get_d2udX2()
-  self.get_dvfdX()
-  self.get_d2vfdX2()
+#  self.get_d2udX2()
+#  self.get_dvfdX()
+#  self.get_d2vfdX2()
   if 'tf' in Parameters.Physics:
     if not Parameters.DarcyBrinkman:
       self.get_F11()
@@ -224,9 +224,9 @@ def compute_I_variables(self, Parameters):
   self.get_rhofR(Parameters)
   self.get_rhof_0()
   self.get_khat(Parameters)
-  self.get_drhofRdX(Parameters)
-  self.get_Qf(Parameters)
-  self.get_DIV_Qf(Parameters)
+#  self.get_drhofRdX(Parameters)
+#  self.get_Qf(Parameters)
+#  self.get_DIV_Qf(Parameters)
   return
 
 @register_method
@@ -290,8 +290,8 @@ def compute_K_variables(self, Parameters):
   if 'uf' in Parameters.Physics:
     self.get_v_f()
     self.get_v_s()
-    self.get_dvfdX()
-    self.get_Qf(Parameters)
+#    self.get_dvfdX()
+#    self.get_Qf(Parameters)
   else:
     self.get_p_fDot()
     self.get_JDot()
@@ -484,7 +484,8 @@ def get_vDarcy(self, Parameters):
   try:
     self.vDarcy = -self.khat*(self.dp_fdX/self.F11)
     if 'uf' in Parameters.Physics:
-      self.vDarcy -= self.khat*(self.rhofR*(self.a_f - Parameters.Gravity) + self.DIV_Qf)
+#      self.vDarcy -= self.khat*(self.rhofR*(self.a_f - Parameters.Gravity) + self.DIV_Qf)
+      self.vDarcy -= self.khat*(self.rhofR*(self.a_f - Parameters.Gravity))
       if Parameters.DarcyBrinkman:
         self.vDarcy += self.khat*(self.DIV_FES/(self.nf*self.F11))
     else: 
