@@ -1,10 +1,12 @@
 #---------------------------------------------------------------------------------
 # Module providing encapsulated input data handling capabilities to configure the 
-# 1D uniaxial strain single-phase or multiphase simulations.
+# SPONGE-1D single-phase or multiphase simulations. Additional data parsing has
+# been implemented for LS-DYNA (under the assumption of Q8 hex, 1-D uniaxial
+# strain) and Ratel.
 #
 # Author:        Zachariah Irwin
 # Institution:   University of Colorado Boulder
-# Last Edits:    October 18, 2024
+# Last Edits:    March 10, 2025
 #---------------------------------------------------------------------------------
 import sys, os
 
@@ -808,6 +810,91 @@ class SimInputs:
     self.coordsDYNA    = np.delete(self.coordsDYNA, (0,1), axis=1)
 
     return
+  #----------------------------------------------------------------------------
+  # Read the Ratel .yml input file and populate member data fields.
+  #
+  # This is not used in SPONGE-1D /src/ code but in the subsequent /scripts/.
+  #----------------------------------------------------------------------------
+  def readRatelInputFile(self):
+    inputFileObj = open(self.m_InputFile)
+
+    for line in inputFileObj:
+        
+      if not line.startswith('#'):
+          
+        lineDict = line.split(':')
+
+        if lineDict[0] == 'model':
+          if 'poro' not in lineDict[1]:
+            self.Physics = 'u'
+          else:
+            self.Physics = 'u-pf'
+
+        if lineDict[0] == 'E':
+          self.emod = float(lineDict[1])
+        
+        if lineDict[0] == 'nu':
+          self.nu = float(lineDict[1])
+
+        if lineDict[0] == 'mu_d':
+          self.mu = float(lineDict[1])
+
+        if lineDict[0] == 'lambda_d':
+          self.lambd = float(lineDict[1])
+
+        if lineDict[0] == 'bulk_d':
+          self.KSkel = float(lineDict[1])
+
+        if lineDict[0] == 'rho':
+          if self.Physics == 'u-pf':
+            self.rhosR_0 = float(lineDict[1])
+          else:
+            self.rho_0 = float(lineDict[1]) 
+
+        if lineDict[0] == 'rho_fR0':
+          self.rhofR_0 = float(lineDict[1])
+
+        if lineDict[0] == 'mu_f':
+          self.fluidShearVisc = float(lineDict[1])
+
+        if lineDict[0] == 'varkappa_0':
+          self.varkappa = float(lineDict[1])
+
+        if lineDict[0] == 'kappa':
+          self.kappa = float(lineDict[1])
+
+        if lineDict[0] == 'phi_0f':
+          self.nf_0 = float(lineDict[1])
+          self.ns_0 = 1 - self.nf_0
+
+        if lineDict[0] == 'bulk_f':
+          self.KF = float(lineDict[1])
+        
+        if 'dt' in lineDict[0]:
+          self.DT = float(lineDict[1])
+
+        if 'max_time' in lineDict[0]:
+          self.TStop = float(lineDict[1])
+
+        if 'box_faces' in lineDict[0]:
+          tempList = lineDict[1].strip().split(',')
+          self.nex = float(tempList[0])
+          self.ney = float(tempList[1])
+          self.nez = float(tempList[2])
+        
+        if 'box_lower' in lineDict[0]:
+          tempList = lineDict[1].strip().split(',')
+          self.x0  = float(tempList[0])
+          self.y0  = float(tempList[1])
+          self.z0  = float(tempList[2])
+        
+        if 'box_upper' in lineDict[0]:
+          tempList = lineDict[1].strip().split(',')
+          self.x1  = float(tempList[0])
+          self.y1  = float(tempList[1])
+          self.z1  = float(tempList[2])
+
+    return
   #-----------------------------------------------------------------------
   # A utility function that displays and prints all the configures input
   # variables, and allows the user to verify the simulation configuration.
@@ -1173,4 +1260,6 @@ if __name__ == '__main__':
     inputData.printAndVerify()
   elif os.path.splitext(inputFile)[1] == '.k':
     sys.exit("------\nERROR:\n------\nPrint & Verify routine not in place for LS-DYNA input files.")
+  elif os.path.splitext(inputFile)[1] == '.yml':
+    sys.exit("------\nERROR:\n------\nPrint & Verify routine not in place for Ratel input files.")
 
