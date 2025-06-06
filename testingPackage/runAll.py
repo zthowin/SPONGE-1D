@@ -75,7 +75,7 @@ def run_all():
   #--------------------------
   if args.case == 'all':
     plot_input = ['MMS/mmsError-input.dat','deBoer/deBoer-input.dat']
-    options    = [['-mmst','-mmsn','2'],['--text'],['-S','-F']]
+    options    = [['-mmst','-mmsn','2','-mmssuf', 'T'],['--text']]
   elif args.case == 'MMS':
     plot_input = ['MMS/mmsError-input.dat']
     options    = [['-mmst','-mmsn','2']]
