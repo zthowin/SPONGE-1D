@@ -341,7 +341,7 @@ Pore fluid viscosity = SHEAR (Pa-s) : 1e-3 ; BULK (Pa-s) : 2.86e-3 ; ENABLE : Fa
 # Solid displacement Dirichlet boundary condition
 # [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
 #
-# Notes:
+# Notes on BCs:
 # ------
 # - Available location combinations are:
 #   - Top
@@ -359,11 +359,10 @@ Pore fluid viscosity = SHEAR (Pa-s) : 1e-3 ; BULK (Pa-s) : 2.86e-3 ; ENABLE : Fa
 #   follow in similar fashion.
 #--------------------------------------------------------------------------------------------------
 Solid displacement BC = APPLY : True ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m) : 0 ; T0 (s) : 0 ; T1 (s) : 1
+
 #--------------------------------------------------------------------------------------------------
 # Solid velocity Dirichlet boundary condition
 # [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
-#
-# See notes on line: 329
 #--------------------------------------------------------------------------------------------------
 Solid velocity BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
@@ -373,12 +372,9 @@ Solid velocity BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None
 #
 # Notes:
 # ------
-# - See notes on line: 350
-# - Available applications:
-#   - Impulse:     a triangular impulse, ramp up and down need not be equal
-#   - Step:        approximates a step function, and holds this magnitude until specified
+# - Additional available applications:
 #   - Friedlander: Friedlander (1946) blast wave
-#   - Sinusoidal:  sinusoidal loading
+#   - Sinusoidal:  sinusoidal loading, t^\sigma_0 * cos(omega * t)
 # - Traction is assumed positive downward (positive compression)
 #--------------------------------------------------------------------------------------------------
 Traction BC = APPLY : True ; LOCATION(S) : LOCATION(S) : Top ; APPLICATION-TYPE : Sinusoidal ; FREQUENCY (rad/s) : 40 ; MAGNITUDE (Pa) : 40e3 ; T0 (s) : 0 ; T1 (s) : 0.4
