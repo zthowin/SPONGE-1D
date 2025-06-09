@@ -141,10 +141,10 @@ def integrate_u_FO(LM, GEXT, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
@@ -447,10 +447,10 @@ def integrate_ut_FO(LM, F, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
@@ -784,10 +784,10 @@ def integrate_upf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
@@ -1131,10 +1131,10 @@ def integrate_uufpf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
@@ -1508,10 +1508,10 @@ def integrate_upftstf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------
@@ -1995,10 +1995,10 @@ def integrate_uufpftstf_FO(LM, F, D, V, A, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------------------
       # Compute the Runge-Kutta stage "i" data.
       #----------------------------------------

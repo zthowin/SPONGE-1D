@@ -151,11 +151,11 @@ def integrate_Newmark_beta(LM, F, D, V, A, Parameters):
       #--------------------------------------------
       # Update simulation time from t_n to t_{n+1}.
       #--------------------------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #----------------------------
       # Update BCs at time t_{n+1}.
       #----------------------------
@@ -437,11 +437,11 @@ def integrate_Trapezoidal(LM, F, D, V, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
       Parameters.tk = Parameters.t
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #--------------------------------
       # Update the BCs at time t_{n+1}.
       #--------------------------------
@@ -672,10 +672,10 @@ def integrate_QS(LM, GEXT, D, Parameters):
       #------------------------
       # Update simulation time.
       #------------------------
+      if Parameters.ts_monitor:
+        print(n, "TS dt {:.3e}".format(Parameters.dt), "time {:.3e}".format(Parameters.t))
       Parameters.t += Parameters.dt
       n            += 1
-      if Parameters.ts_monitor:
-        print(n, "TS dt {:.3e}s".format(Parameters.dt), "time {:.3e} s".format(Parameters.t))
       #--------------------------------
       # Update the BCs at time t_{n+1}.
       #--------------------------------
