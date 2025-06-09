@@ -1,84 +1,470 @@
+#--------------------------------------------------------------------------------------------------
+# ABOUT:
+# ------
+# This is an example of the ASCII form user-input data for running the Lagrangian finite element 
+# code SPONGE-1D with executable 'runMain.py', with full documentation.
+# 
+# INSTRUCTIONS:
+# -------------
+# - Every line starting with a '#' is a comment and will be ignored by the code. 
+# - Appropriate parameters for each field (identified by a human-readable variable tag) 
+#   have to be entered after the '=' sign for each tag.
+# - The int/float/string/bool data format has been indicated for each variable in the documentation
+# - Between each TAG variable and values  - place a ":"
+# - To separate TAG variables             - place a ";"
+# 
+# Author:       Zachariah Irwin
+# Institution:  University of Colorado, Boulder
+# Last edits:   June 9, 2025
+# 
+#--------------------------------------------------------------------------------------------------
+# 1. General Configuration:
+# -------------------------
+#--------------------------------------------------------------------------------------------------
+# Physical formulation of the problem at hand
+# [STRING]
+#
+# Notes:
+# ------
+# - Available options:
+#   - u              (elasticity or elastodynamics)
+#   - u-t            (thermoelastodynamics)
+#   - u-pf           (poroelasticity or poroelastodynamics)
+#   - u-uf-pf        (poroelastodynamics, a_f != a_s)
+#   - u-pf-ts-ts*    (thermoporoelastodynamics)
+#   - u-uf-pf-ts-tf* (thermoporoelastodynamics, a_f != a_s)
+#   - user           (to be used in conjunction with Runge-Kutta integrators for user-defined physics)
+#   - driver         (stress-only update from strain, 0 DOF problem)
+#
+# * Not fully functioning, refer to Irwin (2024).
+#--------------------------------------------------------------------------------------------------
 Physics = u-uf-pf
 
+#--------------------------------------------------------------------------------------------------
+# Flag to determine whether or not inertia terms (dynamics) are turned on or off
+# [STRING: True/False]
+#--------------------------------------------------------------------------------------------------
 Dynamics = True
 
+#--------------------------------------------------------------------------------------------------
+# 2. File and Path Inputs:
+# ------------------------
+#--------------------------------------------------------------------------------------------------
+# Project directory
+# [STRING]
+#
+# Location of directory containing subdirectories for input/output
+#--------------------------------------------------------------------------------------------------
 Project directory = /parent/directory/
 
+#--------------------------------------------------------------------------------------------------
+# Output directory
+# [STRING]
+#
+# Location of directory containing subdirectories for output, default is a subdirectory of 
+# 'Project directory'
+#--------------------------------------------------------------------------------------------------
 Output directory = output/deBoer/test/
 
+#--------------------------------------------------------------------------------------------------
+# 3. Simulation Parameters.
+# -------------------------
+#--------------------------------------------------------------------------------------------------
+# The timing parameters that control the integration/simulation
+# [FLOAT, FLOAT, FLOAT, INT]
+#--------------------------------------------------------------------------------------------------
 Simulation timing = START (s) : 0.0 ; STOP (s) : 0.4 ; DELTA (s) : 1e-4 ; WRITE : 100
 
+#--------------------------------------------------------------------------------------------------
+# Parameters corresponding to the implementation of the numerical integration scheme
+# [STRING, STRING: True/False]
+#
+# Notes:
+# ------
+# - Available options include:
+#   - Newmark-beta       (implicit)
+#   - Trapezoidal        (implicit)
+#   - Central-difference (explicit)
+#   - RKFNC              (explicit, Runge-Kutta-Cash-Karp, 5th order)
+#   - RKBS               (explicit, Runge-Kutta-Bogacki-Shampine, 3rd order)
+# 
+# - Mass lumping procedure only available for explicit methods that do not use Hermite elements
+#--------------------------------------------------------------------------------------------------
 Integration setup = SCHEME : Newmark-beta : LUMPING : False
 
+#--------------------------------------------------------------------------------------------------
+# Parameters corresponding to an adaptive time stepping scheme
+# [STRING: True/False, INT, FLOAT, FLOAT, FLOAT, FLOAT, FLOAT, FLOAT, STRING: True/False]
+#
+# Notes:
+# ------
+# - Implicit-scheme parameters:
+#   - ITERATIONS: the number of Newton-Raphson iterations
+#   - INCREASE:   the factor by which the time step is increased if the solution converges in less
+#                 than ITERATIONS
+#   - DECREASE:   the factor by which the time step is decreased if the solution does not converge
+#                 after ITERATIONS
+#   - START:      when the scheme is to be applied
+#   - STOP:       when the scheme is to be terminated
+#
+# - MAX:  the maximum allowable time step
+# - MIN:  the minimum allowable time step
+# - SAVE: boolean flag for whether or not to save adaptive time step data
+#--------------------------------------------------------------------------------------------------
 Adaptive time stepping setup = ENABLED : False ; ITERATIONS : 6 ; INCREASE : 1.1 ; DECREASE : 0.25 ; MAX (s) : 1e-3 ; MIN (s) : 1e-8 ; START (s) : 1e-4 ; STOP (s) : 1e-3 ; SAVE : False
 
+#--------------------------------------------------------------------------------------------------
+# Parameters corresponding to the type of the numerical integration scheme
+# [FLOAT, FLOAT, (FLOAT)]
+#
+# Notes:
+# ------
+# - Linear acceleration:    BETA : 0.3025 ; GAMMA : 0.6
+# - Constant acceleration:  BETA : 0.25   ; GAMMA : 0.5
+# - Backward-Euler:         BETA : 0.0    ; GAMMA : 1
+# - Central-difference:     BETA : 0.0    ; GAMMA : 0.5  (optional)
+# - Runge-Kutta:            BETA : 0.0    ; GAMMA : 0.0  (optional)
+# - Predictor-corrector     ALPHA : 1.0                  (optional, only for P-C method, disabled)
+#--------------------------------------------------------------------------------------------------
 Newmark parameters = BETA : 0.3025 ; GAMMA : 0.6 ; ALPHA : 0.0
 
+#--------------------------------------------------------------------------------------------------
+# Error parameters
+# [FLOAT/STRING, FLOAT, INT/STRING, STRING/INT, FLOAT/STRING]
+#
+# Notes:
+# ------
+# - Use ABSOLUTE TOLERANCE for explicit schemes
+# 
+# - NORM: the algebraic norm used to quantify local error
+# - SF:   the scale factor by which to adjust the time step (used in conjunction with error or CFL)
+#--------------------------------------------------------------------------------------------------
 Error parameters = RELATIVE TOLERANCE : 1e-10 ; ABSOLUTE TOLERANCE : 1e-8 ; MAX ITERATIONS : 20 ; Norm : 2 ; SF : None
 
+#--------------------------------------------------------------------------------------------------
+# REMAINING INPUTS NOT REQUIRED FOR USER-DEFINED ODEs
+#--------------------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------
+# Element parameters
+# [STRING, INT, INT]
+#
+# Notes:
+# ------
+# - For element type, the order is solid skeleton displacement, pore fluid displacement and
+#   pore fluid pressure, solid temperature, pore fluid temperature
+#   - Q3H-Q3H-P1-T1-T1: 4 DOF for displacements, 2 DOF for pore fluid pressure & temperatures
+#                       (Hermite cubic polynomials for displacement solutions)
+#   - Q3H-Q1-P1-T1-T1:  4 DOF for solid skeleton displacements, 2 DOF for pore fluid displacement,
+#                       pore fluid pressure and temperatures
+#                       (Hermite cubic polynomials for displacement solutions)
+#   - Q3H-P1-T1-T1:     4 DOF for displacements, 2 DOF for pore fluid pressure & temperatures
+#                       (Hermite cubic polynomials for displacement solutions)
+#   - Q3H-Q3H-P1:       4 DOF for displacements, 2 DOF for pore fluid pressure (Hermite cubic)
+#   - Q3-Q3-P1:         4 DOF for displacements, 2 DOF for pore fluid pressure (Lagrange)
+#   - Q3H-Q2-P1:        4 DOF for solid skeleton displacement, 3 DOF for pore fluid displacement 
+#                       and 2 DOF for pore fluid pressure (Hermite cubic polynomials for 
+#                       displacement solution)
+#   - Q3H-Q1-P1:        4 DOF for solid skeleton displacement, 2 DOF for pore fluid displacement
+#                       and pore fluid pressure (Hermite cubic polynomials for displacement
+#                       solution)
+#   - Q2-Q2-P1:         3 DOF for displacements, 2 DOF for pore fluid pressure
+#   - Q2-Q1-P1:         3 DOF for solid skeleton displacement, 2 DOF for pore fluid displacement 
+#                       and pore fluid pressure
+#   - Q1-Q1-P1:         2 DOF for displacements and pore fluid pressure
+#   - Q3H-P1:           4 DOF for displacement, 2 DOF for pore fluid pressure (Hermite cubic
+#                       polynomials for displacement solution)
+#   - Q2-P1:            3 DOF for displacement, 2 DOF for pore fluid pressure
+#   - Q1-P1:            2 DOF for displacement and pore fluid pressure
+#   - Q3H-T1:           4 DOF for displacement, 2 DOF for temperature (Hermite cubic polynomial
+#                       for displacement solution)
+#   - Q1-T1:            2 DOF for displacement and temperature
+#   - Q3H:              4 DOF for displacement (Hermite cubic polynomials)
+#   - Q3:               4 DOF for displacement
+#   - Q2:               3 DOF for displacement
+#   - Q1:               2 DOF for displacement
+#--------------------------------------------------------------------------------------------------
 Element parameters = TYPE : Q2-Q2-P1 ; NUMBER : 10 ; NUMBER OF QUADRATURE POINTS : 3
 
+#--------------------------------------------------------------------------------------------------
+# Parameters for constitutive models
+# [STRING, STRING, FLOAT, FLOAT, FLOAT, FLOAT]
+#
+# Notes:
+# ------
+# - Fluid options relate pore fluid pressure to real mass density of the pore fluid:
+#   - Ideal-Gas   (assumes isothermal temperatures for (u-pf) and (u-uf-pf) formulations)
+#   - Isentropic
+#   - Exponential
+#   - Linear-Bulk (scales pore fluid pressure at time t to the pore fluid bulk modulus)
+#   - Linear-IC   (scales pore fluid pressure at time t to the initial pore fluid pressure)
+# - Solid options relate solid skeleton stress to its strain:
+#   - Saint Venant-Kirchhoff
+#   - neo-Hookean
+#   - neo-Hookean-Eipper
+#   - Clayton-Freed        (fully nonlinear constitutive lung model, explicit integration only)
+#   - Clayton-Freed-Linear (linear coupling constitutive lung model, explicit integration only)
+# - VISCOSITY controls the visoelastic response of the solid skeleton and is only implemented for
+#   the neo-Hookean material model
+# - C0 & C1 are the shock viscosity (bulk viscosity) parameters
+# - ALPHA is the pressure stabilization parameter (only active for poroelastodynamics and
+#   thermoporoelastodynamics)
+# - SUPG is a flag to turn on/off Streamline-upwind Petrov-Galerkin for the pore fluid energy
+#   balance variational equation to stabilize the self-advective transport of fluid heat
+#--------------------------------------------------------------------------------------------------
 Constitutive modeling = FLUID : Exponential ; SOLID : neo-Hookean ; VISCOSITY (s) : 0 ; C0 : 0 ; C1 : 0 ; ALPHA : 0 ; SUPG : False
 
+#--------------------------------------------------------------------------------------------------
+# Parameters specific to the Clayton & Freed (2019) constitutive lung model
+# [FLOAT, FLOAT, FLOAT, FLOAT, FLOAT, FLOAT, FLOAT]
+#
+# Notes:
+# ------
+# - If B1 = 0, viscoelasticity is disabled
+# - To disable damage, pick a high damage threshold Z0 and low (i.e., zero) damage kinetics
+#--------------------------------------------------------------------------------------------------
 Lung parameters = C1 : 0 ; C2 : 0 ; B1 : 0 ; mu_prime : 0 ; Z0 : 0 ; alpha_D : 0 ; omega_D : 0
 
+#--------------------------------------------------------------------------------------------------
+# Problem geometry
+# [STRING, FLOAT, FLOAT]
+# 
+# Notes:
+# ------
+# - Current shapes are Rectangle (square column) or Cylinder (cylindrical column)
+#--------------------------------------------------------------------------------------------------
 Column geometry = SHAPE : Rectangle ; RADIUS/WIDTH (m) : 1.0 ; HEIGHT (m) : 10.0
 
+#--------------------------------------------------------------------------------------------------
+# Young's modulus
+# [FLOAT or None or Calculate]
+#--------------------------------------------------------------------------------------------------
 Young's modulus (Pa) = Calculate
 
+#--------------------------------------------------------------------------------------------------
+# Poisson's ratio
+# [FLOAT or None or Calculate]
+#--------------------------------------------------------------------------------------------------
 Poisson's ratio = Calculate
 
+#--------------------------------------------------------------------------------------------------
+# Shear modulus/Lame parameter \mu
+# [FLOAT or None or Calculate]
+#--------------------------------------------------------------------------------------------------
 Shear modulus (G, mu, Pa) = 5.6e6
 
+#--------------------------------------------------------------------------------------------------
+# Bulk moduli of solid skeleton, fluid and solid constituents
+# [FLOAT or None or Calculate, FLOAT or None, FLOAT or None]
+# 
+#--------------------------------------------------------------------------------------------------
 Bulk moduli (Pa) = KSkel : Calculate ; KF : 2.2e10 ; KS : 2.2e10
 
+#--------------------------------------------------------------------------------------------------
+# Lame parameter \lambda
+# [FLOAT or None or Calculate]
+#--------------------------------------------------------------------------------------------------
 Lambda (Pa) = 8.4e6
 
+#--------------------------------------------------------------------------------------------------
+# Body force
+# [FLOAT]
+#--------------------------------------------------------------------------------------------------
 Body forces (N/kg) = GRAVITY : 0
 
+#--------------------------------------------------------------------------------------------------
+# Volume fraction of fluid
+# [FLOAT]
+#--------------------------------------------------------------------------------------------------
 Volume fraction of constituents = FLUID : 0.42
 
+#--------------------------------------------------------------------------------------------------
+# Real mass densities
+# [FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Real mass density of constituents (kg/m^3) = SOLID : 2.7e3 ; FLUID : 1e3
 
+#--------------------------------------------------------------------------------------------------
+# Specific heats
+# [FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Specific heat of constituents (J/kg-K) = SOLID : 760 ; FLUID : 4.18e3
 
+#--------------------------------------------------------------------------------------------------
+# Volumetric cofficients of thermal expansion
+# [FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Volumetric CTE of constituents (1/K) = SOLID : 1.2e-4 ; FLUID : 2.1e-4
 
+#--------------------------------------------------------------------------------------------------
+# Thermal conductivities
+# [FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Thermal conductivity of constituents (W/m-K) = SOLID : 3 ; FLUID : 0.57
 
+#--------------------------------------------------------------------------------------------------
+# Convective heat transfer cofficient, k_\epsilon^\theta
+#--------------------------------------------------------------------------------------------------
 Convective heat transfer (W/m^3-K) = 0.0
 
+#--------------------------------------------------------------------------------------------------
+# Functional form for hyrdraulic conductivity and parameter for strain-dependent permeability
+# [STRING, FLOAT or None]
+#
+# Notes:
+# ------
+# - Available types:
+#   - Kozeny-Carman      (Coussy, 2004)
+#   - Strain-Exponential (Lai, 1981)
+#   - Hyperbolic         (Markert, 2005); preferred for finite-strain simulations
+#   - Constant
+#--------------------------------------------------------------------------------------------------
 Hydraulic conductivity function = TYPE : Kozeny-Carman ; KAPPA : None
 
+#--------------------------------------------------------------------------------------------------
+# Permeability of solid skeleton
+# [FLOAT]
+#--------------------------------------------------------------------------------------------------
 Intrinsic permeability (m^2) = 1e-9
 
+#--------------------------------------------------------------------------------------------------
+# Pore fluid viscosity
+# [FLOAT, FLOAT, STRING: True/False]
+#
+# Notes:
+# ------
+# - The ENABLE flag is used to enable/disable the Darcy-Brinkman form of Darcy's law
+#--------------------------------------------------------------------------------------------------
 Pore fluid viscosity = SHEAR (Pa-s) : 1e-3 ; BULK (Pa-s) : 2.86e-3 ; ENABLE : False
 
+#--------------------------------------------------------------------------------------------------
+# Solid displacement Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#
+# Notes:
+# ------
+# - Available location combinations are:
+#   - Top
+#   - Bottom
+#   - Top,Bottom
+# - Available application types are:
+#   - Constant
+#   - Step
+#   - Impulse
+# - T0 & T1 indicate the start and stop times (if applicable) for loading
+# - When the location combination "Top,Bottom" is used, the application types, magnitudes, and
+#   times must follow the "Top,Bottom" format, i.e., "Constant,Ramp" application type corresponds
+#   to a constant displacement boundary condition applied to the top of the column and a ramped
+#   displacement boundary condition applied to the bottom of the column. Magnitudes and times
+#   follow in similar fashion.
+#--------------------------------------------------------------------------------------------------
 Solid displacement BC = APPLY : True ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m) : 0 ; T0 (s) : 0 ; T1 (s) : 1
-
+#--------------------------------------------------------------------------------------------------
+# Solid velocity Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#
+# See notes on line: 329
+#--------------------------------------------------------------------------------------------------
 Solid velocity BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Solid/mixture Neumann boundary condition
+# [STRING: True/False, STRING, STRING, FLOAT, FLOAT, FLOAT, FLOAT]
+#
+# Notes:
+# ------
+# - See notes on line: 350
+# - Available applications:
+#   - Impulse:     a triangular impulse, ramp up and down need not be equal
+#   - Step:        approximates a step function, and holds this magnitude until specified
+#   - Friedlander: Friedlander (1946) blast wave
+#   - Sinusoidal:  sinusoidal loading
+# - Traction is assumed positive downward (positive compression)
+#--------------------------------------------------------------------------------------------------
 Traction BC = APPLY : True ; LOCATION(S) : LOCATION(S) : Top ; APPLICATION-TYPE : Sinusoidal ; FREQUENCY (rad/s) : 40 ; MAGNITUDE (Pa) : 40e3 ; T0 (s) : 0 ; T1 (s) : 0.4
 
+#--------------------------------------------------------------------------------------------------
+# Initial conditon for pore fluid pressure
+# [FLOAT]
+#--------------------------------------------------------------------------------------------------
 Pore fluid pressure IC (Pa) = 0
 
+#--------------------------------------------------------------------------------------------------
+# Dirichlet boundary condition for pore fluid pressure
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Pore fluid pressure BC = APPLY : True ; LOCATION(S) : Top ; APPLICATION-TYPE : Constant ; MAGNITUDE (Pa) : 0 ; T0 (s) : 0 ; T1 (s) : 0.4
 
+#--------------------------------------------------------------------------------------------------
+# Neumann boundary condition for pore fluid pressure
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Pore fluid flux BC = APPLY : False ; LOCATIONS(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Pore fluid displacement Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Fluid displacement BC = APPLY : True ; LOCATION(S) : Bottom ; APPLICATION-TYPE : Constant ; MAGNITUDE (m) : 0 ; T0 (s) : 0 ; T1 (s) : 1
 
+#--------------------------------------------------------------------------------------------------
+# Pore fluid velocity Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#
+# Notes:
+# ------
+# - Additional application type: No-Slip 
+#   - This changes the pore fluid displacement DOF at the mesh location to be equal to that of the
+#     solid displacement DOF. If a solid Dirichlet BC is applied at the same location, then the
+#     user must apply the same Dirichlet BC to the pore fluid, rather than specifying the no-slip
+#     condition.
+# - Additional application type: Lagrange 
+#   - This uses the Lagrange multiplier method as an additional weak enforcement to a no-flux
+#     boundary condition. It may only be applied at the 'Top' of the column, and Q3H solid elements
+#     are necessary by default. This is not fully functional (may be due to overconstraint of the
+#     boundary condition if 'Qf' = 0, too).
+#--------------------------------------------------------------------------------------------------
 Fluid velocity BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Initial conditions for temperature(s)
+# [FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Temperature IC (K) = SOLID : 310 ; FLUID : 310
 
+#--------------------------------------------------------------------------------------------------
+# Solid temperature Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Solid temperature BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (K) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Pore fluid temperature Dirichlet boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Fluid temperature BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (K) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Solid temperature Neumann boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Solid heat flux BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : Constant ; MAGNITUDE (W/m^2) : 0 ; T0 (s) : 0 ; T1 (s) : 1
 
+#--------------------------------------------------------------------------------------------------
+# Pore fluid temperature Neumann boundary condition
+# [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
+#--------------------------------------------------------------------------------------------------
 Fluid heat flux BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : Constant ; MAGNITUDE (W/m^2) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
+#--------------------------------------------------------------------------------------------------
+# Method of Manufactured Solutions settings
+# [STRING: True/False, STRING, STRING, STRING]
+# 
+# Notes:
+# ------
+# - Applying MMS will disable larger functionality of the code for the purpose of verification
+# - Various restrictions are applied; consult the MMS input files 'testingPackage/MMS/' for working
+#   examples
+#--------------------------------------------------------------------------------------------------
 MMS = APPLY : False ; SOLID : None ; PRESSURE : None ; FLUID ; None
 
