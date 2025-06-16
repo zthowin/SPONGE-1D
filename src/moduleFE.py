@@ -817,11 +817,11 @@ def insertBC(a_g, a_D, a_V, a_A, a_Dsolve, a_Vsolve, a_Asolve, Parameters):
 #-------------------------------------------------------------------------------------------------
 def initSolidDisplacementBC(a_LM, Parameters):
 
-  if Parameters.ne == 1 and Parameters.ndofSe <= 2:
-    sys.exit("-----------------\nINPUT FILE ERROR:\n-----------------\nNot enough degrees of freedom to solve problem. Use Q2/Q3/Q3H elements or more elements.")
-  
   Parameters.ndof  -= 1
   Parameters.ndofS -= 1
+
+  if Parameters.ndofS <= 0 and ('pf' not in Parameters.Physics or 't' not in Parameters.Physics):
+    sys.exit("-----------------\nINPUT FILE ERROR:\n-----------------\nNot enough degrees of freedom to solve problem. Use Q2/Q3/Q3H elements or more elements.")
 
   Parameters.solidDisplacementDOFBot = (0,0)
   if 'Q3H' in Parameters.Element_Type.split('-')[0]:
