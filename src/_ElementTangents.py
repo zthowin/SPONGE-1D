@@ -979,6 +979,13 @@ def get_K_uu_G2(self, Parameters):
                                  (Parameters.beta*(Parameters.dt**2))*\
                                  (Parameters.mu + (Parameters.lambd + Parameters.mu - \
                                   Parameters.lambd*np.log(self.J))/(self.F11**2)))
+    #--------------------
+    # Convex neo-Hookean.
+    #--------------------
+    elif Parameters.solidModel == 'neo-Hookean-Convex':
+      self.K_uu_G2 = np.einsum('ik, jk, k', self.Bu, self.Bu, self.weights*\
+                               (Parameters.lambd/2 + Parameters.mu)*\
+                               (1 + self.J**(-2))*(Parameters.beta*Parameters.dt**2))
     #------------------------------------------------------------
     # Ehlers-Eipper incompressible model, Ehlers & Eipper (1998).
     #------------------------------------------------------------
@@ -1010,20 +1017,17 @@ def get_K_uu_G2(self, Parameters):
       # Standard/lumping technique (apply across element).
       #---------------------------------------------------
       if self.Gauss_Order == 2:
-        bulk_term = self.rhos_0*Parameters.H0e*(Parameters.C0*Parameters.H0e/(self.F11**2)*self.dvdX*\
-                    ((1. - 2/self.F11)*self.dvdX*(Parameters.beta*Parameters.dt**2) + 2*Parameters.gamma*Parameters.dt)\
-                    - Parameters.C1*self.c/self.F11*((3/2)*self.dvdX*Parameters.beta*Parameters.dt**2/self.F11 \
-                    - Parameters.gamma*Parameters.dt))
+        bulk_term = self.rhos_0*Parameters.H0e*(2*Parameters.C0*Parameters.H0e*self.dvdX*(Parameters.gamma*Parameters.dt)\
+                                                - Parameters.C1*self.c*(self.dvdX*(Parameters.beta*Parameters.dt**2)/(2*self.J)\
+                                                                        + Parameters.gamma*Parameters.dt))
       #-----------------------------------------------
       # Non-standard technique (apply at Gauss point).
       #-----------------------------------------------
       else:
         bulk_term             = np.zeros(self.Gauss_Order)
-        bulk_term[self.Qidxs] = (self.rhos_0*Parameters.H0e*(Parameters.C0*Parameters.H0e/(self.F11**2)*self.dvdX*\
-                                ((1. - 2/self.F11)*self.dvdX*(Parameters.beta*Parameters.dt**2)
-                                + 2*Parameters.gamma*Parameters.dt)\
-                           - Parameters.C1*self.c/self.F11*((3/2)*self.dvdX*Parameters.beta*Parameters.dt**2/self.F11 \
-                           - Parameters.gamma*Parameters.dt)))[self.Qidxs]
+        bulk_term[self.Qidxs] = (self.rhos_0*Parameters.H0e*(2*Parameters.C0*Parameters.H0e*self.dvdX*(Parameters.gamma*Parameters.dt)\
+                                                - Parameters.C1*self.c*(self.dvdX*(Parameters.beta*Parameters.dt**2)/(2*self.J)\
+                                                                        + Parameters.gamma*Parameters.dt)))[self.Qidxs]
       
       self.K_uu_G2 -= np.einsum('ik,jk,k', self.Bu, self.Bu, self.weights*bulk_term)
   #----------------------
@@ -1059,6 +1063,13 @@ def get_K_uu_G2(self, Parameters):
                                    Parameters.lambd*np.log(self.J))/(self.F11**2)))
         else:
           sys.exit("-----------------\nINPUT FILE ERROR:\n-----------------\nNon-dynamic integration scheme not recognized.")
+    #--------------------
+    # Convex neo-Hookean.
+    #--------------------
+    elif Parameters.solidModel == 'neo-Hookean-Convex':
+      self.K_uu_G2 = np.einsum('ik, jk, k', self.Bu, self.Bu, self.weights*\
+                               (Parameters.lambd/2 + Parameters.mu)*\
+                               (1 + self.J**(-2))*(Parameters.gamma*Parameters.dt))
     #------------------------------------------------------------
     # Ehlers-Eipper incompressible model, Ehlers & Eipper (1998).
     #------------------------------------------------------------
@@ -1997,11 +2008,11 @@ def get_K_ufp_I1(self, Parameters):
                                                                 self.nf*self.weights/\
                                                                 (Parameters.RGas*Parameters.Tf_0))
     elif 'Linear' not in Parameters.fluidModel:
-      self.K_ufp_I1 = np.einsum('ik, jk, k', self.Nuf, self.Np, self.a_f*self.rhof_0*self.weights)
       if Parameters.fluidModel == 'Exponential':
+        self.K_ufp_I1  = np.einsum('ik, jk, k', self.Nuf, self.Np, self.a_f*self.rhof_0*self.weights)
         self.K_ufp_I1 /= Parameters.KF
       elif Parameters.fluidModel == 'Isentropic':
-        self.K_ufp_I1 /= 1.4*self.p_f
+        self.K_ufp_I1  = np.einsum('ik, jk, k', self.Nuf, self.Np, self.a_f*self.rhof_0*self.weights/(1.4*self.p_f))
     else:
       self.K_ufp_I1 = np.einsum('ik, jk, k', self.Nuf, self.Np,\
                                 self.a_f*self.J*self.nf*Parameters.rhofR_0*self.weights)
@@ -2039,12 +2050,13 @@ def get_K_ufp_I4(self, Parameters):
       self.K_ufp_I4 = np.einsum('ik, jk, k', self.Nuf, self.Np, -self.J*self.nf*\
                                 self.weights*Parameters.Gravity/(Parameters.RGas*Parameters.Tf_0))
     elif 'Linear' not in Parameters.fluidModel:
-      self.K_ufp_I4 = np.einsum('ik, jk, k', self.Nuf, self.Np, 
-                                -self.rhof_0*self.weights*Parameters.Gravity)
       if Parameters.fluidModel == 'Exponential':
+        self.K_ufp_I4  = np.einsum('ik, jk, k', self.Nuf, self.Np, 
+                                   -self.rhof_0*self.weights*Parameters.Gravity)
         self.K_ufp_I4 /= Parameters.KF
       elif Parameters.fluidModel == 'Isentropic':
-        self.K_ufp_I4 /= 1.4*self.p_f
+        self.K_ufp_I4 = np.einsum('ik, jk, k', self.Nuf, self.Np, 
+                                  -self.rhof_0*self.weights*Parameters.Gravity/(1.4*self.p_f))
     else:
       self.K_ufp_I4 = np.einsum('ik, jk, k', self.Nuf, self.Np, 
                                 -self.J*self.nf*Parameters.rhofR_0*self.weights*Parameters.Gravity)
