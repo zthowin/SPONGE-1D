@@ -586,6 +586,17 @@ def get_P11(self, Parameters):
       print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
       print("Deformation < 0 in stress response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.t, Parameters.dt))
       raise FloatingPointError
+  #--------------------
+  # Convex neo-Hookean.
+  #--------------------
+  if Parameters.solidModel == 'neo-Hookean-Convex':
+    try:
+      self.P11 = self.F11 * ((Parameters.lambd/2)*(self.J**2 - 1)*(self.F11**(-2))\
+                             + Parameters.mu*(1 - self.F11**(-2)))
+    except FloatingPointError:
+      print("--------------------\nCOMPUTATIONAL ERROR:\n--------------------")
+      print("Deformation < 0 in stress response; occurred at element ID %i, t = %.2es and dt = %.2es." %(self.ID, Parameters.t, Parameters.dt))
+      raise FloatingPointError
   #------------------------------------------------------------
   # Ehlers-Eipper incompressible model, Ehlers & Eipper (1998).
   #------------------------------------------------------------
@@ -705,6 +716,11 @@ def get_ps_E(self, Parameters):
     #---------------------
     if Parameters.solidModel == 'neo-Hookean': 
       self.sig22 = Parameters.lambd*np.log(self.J)/self.J
+    #---------------------
+    # Convex neo-Hookean.
+    #---------------------
+    elif Parameters.solidModel == 'neo-Hookean-Convex': 
+      self.sig22 = (Parameters.lambd/2)*(self.J**2 - 1)
     #------------------------------------------------------------
     # Ehlers-Eipper incompressible model, Ehlers & Eipper (1998).
     #------------------------------------------------------------
