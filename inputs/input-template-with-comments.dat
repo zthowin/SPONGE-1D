@@ -15,7 +15,7 @@
 # 
 # Author:       Zachariah Irwin
 # Institution:  University of Colorado, Boulder
-# Last edits:   June 9, 2025
+# Last edits:   June 17, 2025
 # 
 #--------------------------------------------------------------------------------------------------
 # 1. General Configuration:
@@ -83,7 +83,7 @@ Simulation timing = START (s) : 0.0 ; STOP (s) : 0.4 ; DELTA (s) : 1e-4 ; WRITE 
 # ------
 # - Available options include:
 #   - Newmark-beta       (implicit)
-#   - Trapezoidal        (implicit)
+#   - Trapezoidal        (implicit, one-step method)
 #   - Central-difference (explicit)
 #   - RKFNC              (explicit, Runge-Kutta-Cash-Karp, 5th order)
 #   - RKBS               (explicit, Runge-Kutta-Bogacki-Shampine, 3rd order)
@@ -120,7 +120,7 @@ Adaptive time stepping setup = ENABLED : False ; ITERATIONS : 6 ; INCREASE : 1.1
 # Notes:
 # ------
 # - Linear acceleration:    BETA : 0.3025 ; GAMMA : 0.6
-# - Constant acceleration:  BETA : 0.25   ; GAMMA : 0.5
+# - Constant acceleration:  BETA : 0.25   ; GAMMA : 0.5  (PETSC's TSALPHA2 with `radius = 1.0`)
 # - Backward-Euler:         BETA : 0.0    ; GAMMA : 1
 # - Central-difference:     BETA : 0.0    ; GAMMA : 0.5  (optional)
 # - Runge-Kutta:            BETA : 0.0    ; GAMMA : 0.0  (optional)
@@ -151,8 +151,7 @@ Error parameters = RELATIVE TOLERANCE : 1e-10 ; ABSOLUTE TOLERANCE : 1e-8 ; MAX 
 #
 # Notes:
 # ------
-# - For element type, the order is solid skeleton displacement, pore fluid displacement and
-#   pore fluid pressure, solid temperature, pore fluid temperature
+# - For element type, the order follows that set in 'Physics', e.g., 'u-pf' Taylor-Hood is 'Q2-P1'
 #   - Q3H-Q3H-P1-T1-T1: 4 DOF for displacements, 2 DOF for pore fluid pressure & temperatures
 #                       (Hermite cubic polynomials for displacement solutions)
 #   - Q3H-Q1-P1-T1-T1:  4 DOF for solid skeleton displacements, 2 DOF for pore fluid displacement,
@@ -194,16 +193,17 @@ Element parameters = TYPE : Q2-Q2-P1 ; NUMBER : 10 ; NUMBER OF QUADRATURE POINTS
 # ------
 # - Fluid options relate pore fluid pressure to real mass density of the pore fluid:
 #   - Ideal-Gas   (assumes isothermal temperatures for (u-pf) and (u-uf-pf) formulations)
-#   - Isentropic
-#   - Exponential
+#   - Isentropic  (isentropic ideal gas relation)
+#   - Exponential (Fernandez 1972)
 #   - Linear-Bulk (scales pore fluid pressure at time t to the pore fluid bulk modulus)
 #   - Linear-IC   (scales pore fluid pressure at time t to the initial pore fluid pressure)
 # - Solid options relate solid skeleton stress to its strain:
 #   - Saint Venant-Kirchhoff
 #   - neo-Hookean
-#   - neo-Hookean-Eipper
-#   - Clayton-Freed        (fully nonlinear constitutive lung model, explicit integration only)
-#   - Clayton-Freed-Linear (linear coupling constitutive lung model, explicit integration only)
+#   - neo-Hookean-Convex     (Ratel)
+#   - neo-Hookean-Eipper     (Ehlers & Eipper, 1998)
+#   - Clayton-Freed          (fully nonlinear constitutive lung model, explicit integration only)
+#   - Clayton-Freed-Linear   (linear coupling constitutive lung model, explicit integration only)
 # - VISCOSITY controls the visoelastic response of the solid skeleton and is only implemented for
 #   the neo-Hookean material model
 # - C0 & C1 are the shock viscosity (bulk viscosity) parameters
@@ -342,7 +342,7 @@ Pore fluid viscosity = SHEAR (Pa-s) : 1e-3 ; BULK (Pa-s) : 2.86e-3 ; ENABLE : Fa
 # [STRING: True/False, STRING, STRING, STRING, FLOAT, FLOAT, FLOAT]
 #
 # Notes on BCs:
-# ------
+# -------------
 # - Available location combinations are:
 #   - Top
 #   - Bottom
@@ -418,7 +418,7 @@ Fluid displacement BC = APPLY : True ; LOCATION(S) : Bottom ; APPLICATION-TYPE :
 #   - This uses the Lagrange multiplier method as an additional weak enforcement to a no-flux
 #     boundary condition. It may only be applied at the 'Top' of the column, and Q3H solid elements
 #     are necessary by default. This is not fully functional (may be due to overconstraint of the
-#     boundary condition if 'Qf' = 0, too).
+#     boundary condition if 'Qf' = 0 from 'Pore fluid flux BC' disabled/set to zero, too).
 #--------------------------------------------------------------------------------------------------
 Fluid velocity BC = APPLY : False ; LOCATION(S) : None ; APPLICATION-TYPE : None ; MAGNITUDE (m/s) : 0 ; T0 (s) : 0 ; T1 (s) : 0
 
